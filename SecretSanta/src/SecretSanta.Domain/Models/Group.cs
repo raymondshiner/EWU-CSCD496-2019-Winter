@@ -6,5 +6,11 @@ namespace SecretSanta.Domain.Models
     {
         public string Title { get; set; }
         public List<User> Users { get; set; }
+
+        public Group(string title)
+        {
+            Title = title;
+            Users = new List<User>();
+        }
     }
 }
