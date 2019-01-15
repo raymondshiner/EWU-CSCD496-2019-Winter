@@ -12,10 +12,12 @@ namespace SecretSanta.Domain.Tests.ModelTests
         public void CreateUser()
         {
             //Arrange
+
             User user = new User {FirstName = "Inigo", LastName = "Montoya"};
             Assert.AreEqual("Inigo", user.FirstName);
 
             //Act
+            
 
 
             //Assert
@@ -30,7 +32,7 @@ namespace SecretSanta.Domain.Tests.ModelTests
 
             User u4 = new User();
 
-            u4.Id = 04;
+            u4.FirstName = "Steve";
 
             userService.AddUser(u4);
 

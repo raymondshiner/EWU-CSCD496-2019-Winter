@@ -11,19 +11,24 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-        public void AddGiftToUser(Gift gift, User user)
+        public void AddGiftToUser(Gift theGift, int userId)
         {
-            if (gift == null || user == null)
+            if (theGift == null)
                 return;
 
-            User dbUser = DbContext.Users.Find(user);
+            User dbUser = DbContext.Users.Find(userId);
 
             if (dbUser == null)
                 return;
 
-            dbUser.Gifts.Add(gift);
+            dbUser.Gifts.Add(theGift);
+            theGift.User = dbUser;
+
+            DbContext.Gifts.Add(theGift);
+
             DbContext.SaveChanges();
         }
+
         /*
         public void EditUserGift(Gift gift, User user)
         {
@@ -40,14 +45,19 @@ namespace SecretSanta.Domain.Services
         }
         */
 
-        public bool RemoveUserGift(Gift gift, User user)
+        public bool RemoveUserGift(string giftId, int userId)
         {
-            if (gift == null || user == null)
-                return false;
+            User dbUser = DbContext.Users.Find(userId);
 
-            User dbUser = DbContext.Users.Find(user);
-            bool res = dbUser.Gifts.Remove(gift);
+            Gift theGift = DbContext.Gifts.Find(giftId);
+
+            dbUser.Gifts.Remove(theGift);
+            var check = DbContext.Gifts.Remove(theGift);
+
+            bool res = check != null;
+
             DbContext.SaveChanges();
+
             return res;
         }
     }

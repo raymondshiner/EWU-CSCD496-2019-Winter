@@ -21,23 +21,18 @@ namespace SecretSanta.Domain.Services
             return group;
         }
 
-        public void AddUserToGroup(Group group, User user)
+        public void AddUserToGroup(int userId, string groupName)
         {
-            if (group is null)
-            {
+            if (groupName == null)
+                return;
+
+            Group dbGroup = DbContext.Groups.Find(groupName);
+            User user = DbContext.Users.Find(userId);
+
+            if (dbGroup == null)
                 throw new ArgumentException("Cannot add a User to a null Group.");
-            }
-            if (user is null)
-            {
-                throw new ArgumentException("Cannot add a null User.");
-            }
-
-            Group dbGroup = DbContext.Groups.Find(group);
-
-            if (dbGroup is null)
-            {
-                throw new Exception("Could not find specified group in DbContext.");
-            }
+            if (user == null)
+                return;
 
             dbGroup.Users.Add(user);
             user.Groups.Add(dbGroup);
@@ -45,15 +40,17 @@ namespace SecretSanta.Domain.Services
             DbContext.SaveChanges();
         }
 
-        public bool RemoveUserFromGroup(Group group, User user)
+        public bool RemoveUserFromGroup(int userId, string groupName)
         {
-            if (group == null || user == null)
+            if (groupName == null)
                 return false;
 
-            Group dbGroup = DbContext.Groups.Find(group);
+            Group dbGroup = DbContext.Groups.Find(groupName);
 
             if (dbGroup == null)
                 return false;
+
+            User user = DbContext.Users.Find(userId);
 
             bool userFromGroup = dbGroup.Users.Remove(user);
             DbContext.SaveChanges();

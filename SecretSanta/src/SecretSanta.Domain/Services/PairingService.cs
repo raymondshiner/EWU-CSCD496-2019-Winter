@@ -11,10 +11,18 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-        public void AddPairing(Pairing pairing)
+        public void AddPairing(int recipientId, string santaId)
         {
-            if (pairing?.Recipient == null || pairing.Santa == null) 
+            User recipient = DbContext.Users.Find(recipientId);
+            User santa = DbContext.Users.Find(santaId);
+
+            if (recipient == null || santa == null)
                 return;
+
+            Pairing pairing = new Pairing();
+
+            pairing.Recipient = recipient;
+            pairing.Santa = santa;
 
             DbContext.Pairings.Add(pairing);
             DbContext.SaveChanges();

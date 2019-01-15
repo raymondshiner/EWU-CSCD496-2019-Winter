@@ -9,7 +9,7 @@ namespace SecretSanta.Domain.Models
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Gift> Gifts { get; set; }
+        public DbSet<Gift> Gifts { get; set; } 
         public DbSet<Pairing> Pairings { get; set; }
         public DbSet<Message> Messages { get; set; }
 
@@ -17,5 +17,12 @@ namespace SecretSanta.Domain.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         { }
+
+        /*
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("DataSource=:memory:");
+        }
+        */
     }
 }

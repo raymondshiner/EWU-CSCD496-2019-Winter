@@ -11,10 +11,21 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-        public void AddMessage(Message msg)
+        public void AddMessage(int senderId, int recipientId, string text)
         {
-            if (msg == null)
+            if (text == null)
                 return;
+
+            User sender = DbContext.Users.Find(senderId);
+            User recipient = DbContext.Users.Find(recipientId);
+
+            if(sender == null || recipient == null)
+                return;
+            
+            Message msg = new Message();
+            msg.Sender = sender;
+            msg.Recipient = recipient;
+            msg.Text = text;
 
             DbContext.Messages.Add(msg);
             DbContext.SaveChanges();
