@@ -15,10 +15,31 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-
         public void AddUser(User user)
         {
             DbContext.Users.Add(user);
+            DbContext.SaveChanges();
+        }
+
+        public void UpdateUser(User user)
+        {
+            User jdoe = DbContext.Users.Find(user);
+
+            if (jdoe == null)
+                return;
+
+            if(user.FirstName != null)
+                jdoe.FirstName = user.FirstName;
+
+            if (user.LastName != null)
+                jdoe.LastName = user.LastName;
+
+            if (user.Posts != null)
+                jdoe.Posts = user.Posts;
+
+            if (user.Id != null)
+                jdoe.Id = user.Id;
+
             DbContext.SaveChanges();
         }
     }
