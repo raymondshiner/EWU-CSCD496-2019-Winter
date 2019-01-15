@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
 using SecretSanta.Domain.Services;
 
-namespace SecretSanta.Domain.Tests.Models
+namespace SecretSanta.Domain.Tests.ModelTests
 {
     [TestClass]
     public class UserTests

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SecretSanta.Domain.Tests.Models
+namespace SecretSanta.Domain.Tests.ModelTests
 {
     [TestClass]
     public class GroupTests
