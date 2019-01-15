@@ -31,6 +31,20 @@ namespace SecretSanta.Domain.Tests.ModelTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_NullTitle_ThrowException()
+        {
+            Group group = new Group(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_EmptyTitle_ThrowException()
+        {
+            Group group = new Group("");
+        }
+
+        [TestMethod]
         public void SetAndGetTitle_ReturnsSetTitle()
         {
             Group group = new Group("Humans");

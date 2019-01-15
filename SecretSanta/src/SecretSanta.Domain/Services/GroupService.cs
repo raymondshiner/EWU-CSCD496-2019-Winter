@@ -12,13 +12,12 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-        public void CreateGroup(Group group)
+        public Group CreateGroup(string title)
         {
-            if (group == null)
-                return;
-
+            Group group = new Group(title);
             DbContext.Groups.Add(group);
             DbContext.SaveChanges();
+            return group;
         }
 
         public void AddUserToGroup(Group group, User user)
