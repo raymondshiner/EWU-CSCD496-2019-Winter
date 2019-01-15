@@ -34,9 +34,6 @@ namespace SecretSanta.Domain.Services
             if (user.LastName != null)
                 jdoe.LastName = user.LastName;
 
-            if (user.Posts != null)
-                jdoe.Posts = user.Posts;
-
             if (user.Id != null)
                 jdoe.Id = user.Id;
 
