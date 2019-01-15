@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
@@ -22,16 +23,24 @@ namespace SecretSanta.Domain.Services
 
         public void AddUserToGroup(Group group, User user)
         {
-            if (group == null || user == null)
-                return;
+            if (group is null)
+            {
+                throw new ArgumentException("Cannot add a User to a null Group.");
+            }
+            if (user is null)
+            {
+                throw new ArgumentException("Cannot add a null User.");
+            }
 
             Group dbGroup = DbContext.Groups.Find(group);
 
-            if(dbGroup == null)
-                return;
+            if (dbGroup is null)
+            {
+                throw new Exception("Could not find specified group in DbContext.");
+            }
 
-            dbGroup.Users.Add(user); // add user to group db
-            user.Groups.Add(dbGroup);// add group to specific user ref passed in
+            dbGroup.Users.Add(user);
+            user.Groups.Add(dbGroup);
 
             DbContext.SaveChanges();
         }
