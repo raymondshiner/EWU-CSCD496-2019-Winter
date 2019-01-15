@@ -1,4 +1,5 @@
-﻿using SecretSanta.Domain.Models;
+﻿using System.Collections.Generic;
+using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
 {
@@ -30,7 +31,9 @@ namespace SecretSanta.Domain.Services
             if(dbGroup == null)
                 return;
 
-            dbGroup.Users.Add(user);
+            dbGroup.Users.Add(user); // add user to group db
+            user.Groups.Add(dbGroup);// add group to specific user ref passed in
+
             DbContext.SaveChanges();
         }
 
@@ -49,8 +52,6 @@ namespace SecretSanta.Domain.Services
 
             return userFromGroup;
         }
-
-
 
     }
 }

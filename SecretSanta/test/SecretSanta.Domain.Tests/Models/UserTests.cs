@@ -20,5 +20,18 @@ namespace SecretSanta.Domain.Tests.Models
 
         }
 
+        [TestMethod]
+        public void TEST_METHOD()
+        {
+            //Arrange
+            
+
+            //Act
+
+
+            //Assert
+
+        }
+
     }
 }
