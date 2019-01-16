@@ -11,19 +11,24 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-        public void AddPairing(int recipientId, string santaId)
+        public Pairing CreatePairing(int recipientId, string santaId)
         {
             User recipient = DbContext.Users.Find(recipientId);
             User santa = DbContext.Users.Find(santaId);
 
             if (recipient == null || santa == null)
-                return;
+                return null;
 
             Pairing pairing = new Pairing();
 
             pairing.Recipient = recipient;
             pairing.Santa = santa;
 
+            return pairing;
+        }
+
+        public void AddPairing(Pairing pairing)
+        {
             DbContext.Pairings.Add(pairing);
             DbContext.SaveChanges();
         }

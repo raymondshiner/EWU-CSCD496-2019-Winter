@@ -16,9 +16,14 @@ namespace SecretSanta.Domain.Services
         public Group CreateGroup(string title)
         {
             Group group = new Group(title);
+            group.Users = new List<User>();
+            return group;
+        }
+
+        public void AddGroup(Group group)
+        {
             DbContext.Groups.Add(group);
             DbContext.SaveChanges();
-            return group;
         }
 
         public void AddUserToGroup(int userId, string groupName)

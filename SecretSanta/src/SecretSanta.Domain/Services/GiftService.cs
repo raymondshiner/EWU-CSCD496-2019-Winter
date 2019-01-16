@@ -11,6 +11,21 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
+        public Gift CreateGift(string title, int importance, string description, string url)
+        {
+            if (title == null || importance < 0)
+                return null;
+
+            Gift theGift = new Gift();
+
+            theGift.Title = title;
+            theGift.Importance = importance;
+            theGift.Description = description;
+            theGift.URL = url;
+
+            return null;
+        }
+
         public void AddGiftToUser(Gift theGift, int userId)
         {
             if (theGift == null)
@@ -21,8 +36,8 @@ namespace SecretSanta.Domain.Services
             if (dbUser == null)
                 return;
 
-            dbUser.Gifts.Add(theGift);
             theGift.User = dbUser;
+            dbUser.Gifts.Add(theGift);
 
             DbContext.Gifts.Add(theGift);
 

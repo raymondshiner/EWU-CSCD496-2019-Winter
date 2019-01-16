@@ -12,15 +12,33 @@ namespace SecretSanta.Domain.Tests.ServiceTests
     public class GroupServiceTests
     {
         /*
+        private SqliteConnection SqliteConnection;
+        private DbContextOptionsBuilder<ApplicationDbContext> Options;
+
         [TestInitialize]
         public void OpenConnection()
         {
-            SqliteConnection = new string(SqliteConnection("DataSource=:memory:");
+            SqliteConnection = new SqliteConnection("DataSource=:memory:");
             SqliteConnection.Open();
 
-            Opetions = new DbContextOptions<ApplicationDbContext>
-        }
-        */
+            Options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseSqlite(SqliteConnection)
+                .UseLoggerFactory(GetLoggerFactory())
+                .EnableSensitiveDataLogging()
+                .Options;
 
+            using (var context = new ApplicationDbContext(Options))
+            {
+                context.Database.EnsureCreated();
+            }
+        }
+
+        [TestCleanup]
+        public void CloseConnection()
+        {
+            SqliteConnection.Close();
+        }
+        
+        */
     }
 }

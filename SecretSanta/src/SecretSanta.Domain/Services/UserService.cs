@@ -15,18 +15,23 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
-        public void AddUser(string firstname, string lastname)
+        public User CreateUser(string firstname, string lastname)
         {
             if (firstname == null || lastname == null)
-                return;
+                return null;
 
             User user = new User();
-            
+
             user.FirstName = firstname;
             user.LastName = lastname;
             user.Groups = new List<Group>();
             user.Gifts = new List<Gift>();
 
+            return user;
+        }
+
+        public void AddUser(User user)
+        {
             DbContext.Users.Add(user);
             DbContext.SaveChanges();
         }
