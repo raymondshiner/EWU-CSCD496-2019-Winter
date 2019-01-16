@@ -11,6 +11,14 @@ namespace SecretSanta.Domain.Services
             DbContext = context;
         }
 
+        public void AddMessage(Message msg)
+        {
+            DbContext.Messages.Add(msg);
+            DbContext.SaveChanges();
+        }
+
+        //Create not required, we made it because we thought it might be useful later
+        /* 
         public Message CreateMessage(int senderId, int recipientId, string text)
         {
             if (text == null)
@@ -29,11 +37,6 @@ namespace SecretSanta.Domain.Services
 
             return msg;
         }
-
-        public void AddMessage(Message msg)
-        {
-            DbContext.Messages.Add(msg);
-            DbContext.SaveChanges();
-        }
+        */
     }
 }

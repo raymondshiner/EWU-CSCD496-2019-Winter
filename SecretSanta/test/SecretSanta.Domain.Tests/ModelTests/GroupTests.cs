@@ -62,15 +62,15 @@ namespace SecretSanta.Domain.Tests.ModelTests
             Assert.AreEqual(expectedID, group.Id);
         }
 
-        [TestMethod]
-        public void SetUsers_SetsSuccessfully()
-        {
-            Group group = new Group("Humans");
-            group.Users?.Add(new User());
-            List<User> userList = new List<User>();
-            group.Users = userList;
-            Assert.AreEqual(userList, group.Users);
-            Assert.AreEqual(0, group.Users.Count);
-        }
+        //[TestMethod]
+        //public void SetUsers_SetsSuccessfully()
+        //{
+        //    Group group = new Group("Humans");
+        //    group.Users?.Add(new User());
+        //    List<User> userList = new List<User>();
+        //    group.Users = userList;
+        //    Assert.AreEqual(userList, group.Users);
+        //    Assert.AreEqual(0, group.Users.Count);
+        //}
     }
 }

@@ -4,20 +4,13 @@ using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
 {
-    public class GroupService
+    public class GroupService // group is not required, this is just here because we already had it up when the change was made
     {
         private ApplicationDbContext DbContext { get; }
 
         public GroupService(ApplicationDbContext context)
         {
             DbContext = context;
-        }
-
-        public Group CreateGroup(string title)
-        {
-            Group group = new Group(title);
-            group.Users = new List<User>();
-            return group;
         }
 
         public void AddGroup(Group group)
@@ -39,29 +32,39 @@ namespace SecretSanta.Domain.Services
             if (user == null)
                 return;
 
-            dbGroup.Users.Add(user);
-            user.Groups.Add(dbGroup);
+           // dbGroup.Users.Add(user);
+           // user.Groups.Add(dbGroup);
 
             DbContext.SaveChanges();
         }
 
-        public bool RemoveUserFromGroup(int userId, string groupName)
+        //Group not required, had this here already.
+        //public bool RemoveUserFromGroup(int userId, string groupName)
+        //{
+        //    if (groupName == null)
+        //        return false;
+
+        //    Group dbGroup = DbContext.Groups.Find(groupName);
+
+        //    if (dbGroup == null)
+        //        return false;
+
+        //    User user = DbContext.Users.Find(userId);
+
+        //   // bool userFromGroup = dbGroup.Users.Remove(user);
+        //    DbContext.SaveChanges();
+
+        //    return userFromGroup;
+        //}
+
+        //Create not required, we made it because we thought it might be useful later
+        /*
+        public Group CreateGroup(string title)
         {
-            if (groupName == null)
-                return false;
-
-            Group dbGroup = DbContext.Groups.Find(groupName);
-
-            if (dbGroup == null)
-                return false;
-
-            User user = DbContext.Users.Find(userId);
-
-            bool userFromGroup = dbGroup.Users.Remove(user);
-            DbContext.SaveChanges();
-
-            return userFromGroup;
+            Group group = new Group(title);
+            return group;
         }
+        */
 
     }
 }

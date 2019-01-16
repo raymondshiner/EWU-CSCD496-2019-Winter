@@ -10,7 +10,15 @@ namespace SecretSanta.Domain.Services
         {
             DbContext = context;
         }
+        
+        public void AddPairing(Pairing pairing)
+        {
+            DbContext.Pairings.Add(pairing);
+            DbContext.SaveChanges();
+        }
 
+        //Create not required, we made it because we thought it might be useful later
+        /*
         public Pairing CreatePairing(int recipientId, string santaId)
         {
             User recipient = DbContext.Users.Find(recipientId);
@@ -26,11 +34,6 @@ namespace SecretSanta.Domain.Services
 
             return pairing;
         }
-
-        public void AddPairing(Pairing pairing)
-        {
-            DbContext.Pairings.Add(pairing);
-            DbContext.SaveChanges();
-        }
+        */
     }
 }
