@@ -28,7 +28,11 @@ namespace SecretSanta.Domain.Services
             DbContext.SaveChanges();
         }
 
-        //Edit User Gift Goes Here
+        public void UpdateGift(Gift theGift)
+        {
+            DbContext.Gifts.Update(theGift);
+            DbContext.SaveChanges();
+        }
 
         public void RemoveGift(int giftId)
         {

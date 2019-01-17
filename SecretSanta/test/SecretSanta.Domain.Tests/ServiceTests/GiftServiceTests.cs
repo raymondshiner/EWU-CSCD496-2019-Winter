@@ -82,6 +82,42 @@ namespace SecretSanta.Domain.Tests.ServiceTests
         }
 
         [TestMethod]
+        public void UpdateGift()
+        {
+            User user;
+            using (var context = new ApplicationDbContext(Options))
+            {
+                user = CreateUser();
+                var service = new UserService(context);
+                service.AddUser(user);
+            }
+
+            using (var context = new ApplicationDbContext(Options))
+            {
+                Gift gift = CreateGift();
+                var service = new GiftService(context);
+                service.AddGiftToUser(gift, 1);
+            }
+
+            using (var context = new ApplicationDbContext(Options))
+            {
+                var service = new GiftService(context);
+                Gift theGift = service.FindGift(1);
+                theGift.Title = "PS4";
+                service.UpdateGift(theGift);
+            }
+
+            using (var context = new ApplicationDbContext(Options))
+            {
+                var service = new GiftService(context);
+                Gift theGift = service.FindGift(1);
+                Assert.AreEqual("PS4", theGift.Title);
+            }
+
+
+        }
+
+        [TestMethod]
         public void RemoveGift()
         {
             User user;
