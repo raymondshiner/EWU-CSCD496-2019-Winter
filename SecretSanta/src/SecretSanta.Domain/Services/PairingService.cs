@@ -21,8 +21,8 @@ namespace SecretSanta.Domain.Services
         /*
         public Pairing CreatePairing(int recipientId, string santaId)
         {
-            User recipient = DbContext.Users.Find(recipientId);
-            User santa = DbContext.Users.Find(santaId);
+            User recipient = DbContext.Users.FindGift(recipientId);
+            User santa = DbContext.Users.FindGift(santaId);
 
             if (recipient == null || santa == null)
                 return null;

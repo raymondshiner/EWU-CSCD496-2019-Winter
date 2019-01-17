@@ -22,7 +22,6 @@ namespace SecretSanta.Domain.Services
                 return;
 
             theGift.User = dbUser;
-            dbUser.Gifts.Add(theGift);
 
             DbContext.Gifts.Add(theGift);
 
@@ -31,20 +30,16 @@ namespace SecretSanta.Domain.Services
 
         //Edit User Gift Goes Here
 
-        public bool RemoveUserGift(string giftId, int userId)
+        public void RemoveGift(int giftId)
         {
-            User dbUser = DbContext.Users.Find(userId);
-
-            Gift theGift = DbContext.Gifts.Find(giftId);
-
-            dbUser.Gifts.Remove(theGift);
-            var check = DbContext.Gifts.Remove(theGift);
-
-            bool res = check != null;
-
+            Gift theGift = FindGift(giftId);
+            DbContext.Gifts.Remove(theGift);
             DbContext.SaveChanges();
+        }
 
-            return res;
+        public Gift FindGift(int giftId)
+        {
+            return DbContext.Gifts.Find(giftId);
         }
 
 

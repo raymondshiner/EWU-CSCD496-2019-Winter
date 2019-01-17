@@ -44,12 +44,12 @@ namespace SecretSanta.Domain.Services
         //    if (groupName == null)
         //        return false;
 
-        //    Group dbGroup = DbContext.Groups.Find(groupName);
+        //    Group dbGroup = DbContext.Groups.FindGift(groupName);
 
         //    if (dbGroup == null)
         //        return false;
 
-        //    User user = DbContext.Users.Find(userId);
+        //    User user = DbContext.Users.FindGift(userId);
 
         //   // bool userFromGroup = dbGroup.Users.Remove(user);
         //    DbContext.SaveChanges();

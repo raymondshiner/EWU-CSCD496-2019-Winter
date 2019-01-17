@@ -24,8 +24,8 @@ namespace SecretSanta.Domain.Services
             if (text == null)
                 return null;
 
-            User sender = DbContext.Users.Find(senderId);
-            User recipient = DbContext.Users.Find(recipientId);
+            User sender = DbContext.Users.FindGift(senderId);
+            User recipient = DbContext.Users.FindGift(recipientId);
 
             if (sender == null || recipient == null)
                 return null;
