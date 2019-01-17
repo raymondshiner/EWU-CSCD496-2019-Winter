@@ -84,10 +84,9 @@ namespace SecretSanta.Domain.Tests.ServiceTests
         [TestMethod]
         public void UpdateGift()
         {
-            User user;
             using (var context = new ApplicationDbContext(Options))
             {
-                user = CreateUser();
+                User user = CreateUser();
                 var service = new UserService(context);
                 service.AddUser(user);
             }
