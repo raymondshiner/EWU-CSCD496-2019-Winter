@@ -2,7 +2,7 @@
 {
     public class Pairing : Entity
     {
-        public User Recipient;
-        public User Santa;
+        public User Recipient { get; set; }
+        public User Santa { get; set; }
     } 
 }

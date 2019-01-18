@@ -1,4 +1,6 @@
-﻿using SecretSanta.Domain.Models;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
 {
@@ -15,6 +17,11 @@ namespace SecretSanta.Domain.Services
         {
             DbContext.Pairings.Add(pairing);
             DbContext.SaveChanges();
+        }
+
+        public Pairing FindPairing(int pairingId)
+        {
+            return DbContext.Pairings.Include(p => p.Santa).Include(p => p.Recipient).SingleOrDefault();
         }
 
         //Create not required, we made it because we thought it might be useful later
