@@ -75,9 +75,13 @@ namespace SecretSanta.Domain.Tests.ServiceTests
                 Gift gift = CreateGift();
                 var service = new GiftService(context);
                 service.AddGiftToUser(gift, 1);
-                
+
                 Assert.AreEqual("Steve", gift.User.FirstName);
-               // Assert.IsTrue(user.Gifts.Contains(gift));
+
+                var uService = new UserService(context);
+                user = uService.FindUser(1);
+
+                Assert.IsTrue(user.Gifts.Contains(gift));
             }
         }
 

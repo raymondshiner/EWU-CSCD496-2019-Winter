@@ -77,8 +77,37 @@ namespace SecretSanta.Domain.Tests.ServiceTests
                 Assert.AreEqual("Steve", user.FirstName);
             }
 
-            //Assert
 
+            //Assert
+        }
+
+        [TestMethod]
+        public void FindUserWithGiftReturnsAUserWithGift()
+        {
+            //Arrange
+            using (var context = new ApplicationDbContext(Options))
+            {
+                User user = CreateUser();
+                var service = new UserService(context);
+                service.AddUser(user);
+            }
+
+            using (var context = new ApplicationDbContext(Options))
+            {
+                Gift theGift = new Gift();
+                theGift.Title = "Something";
+                var gService = new GiftService(context);
+
+                gService.AddGiftToUser(theGift, 1);
+            }
+            
+            
+            using (var context = new ApplicationDbContext(Options))
+            {
+                var service = new UserService(context);
+                User user = service.FindUser(1);
+                Assert.IsNotNull(user.Gifts);
+            }
         }
 
         [TestMethod]

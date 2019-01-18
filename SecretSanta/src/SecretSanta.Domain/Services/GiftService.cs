@@ -1,4 +1,5 @@
-﻿using SecretSanta.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SecretSanta.Domain.Models;
 
 namespace SecretSanta.Domain.Services
 {

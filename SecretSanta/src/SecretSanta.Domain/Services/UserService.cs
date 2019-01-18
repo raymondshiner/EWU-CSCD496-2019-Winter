@@ -24,7 +24,7 @@ namespace SecretSanta.Domain.Services
 
         public User FindUser(int userId)
         {
-            return DbContext.Users.Find(userId);
+            return DbContext.Users.Include(u => u.Gifts).SingleOrDefault(u => u.Id == userId);
         }
 
         public void UpdateUser(User user)
