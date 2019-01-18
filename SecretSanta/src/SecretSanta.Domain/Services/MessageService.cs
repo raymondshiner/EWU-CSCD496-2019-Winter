@@ -17,6 +17,11 @@ namespace SecretSanta.Domain.Services
             DbContext.SaveChanges();
         }
 
+        public Message FindMessage(int messsageId)
+        {
+            return DbContext.Messages.Find(messsageId);
+        }
+
         //Create not required, we made it because we thought it might be useful later
         /* 
         public Message CreateMessage(int senderId, int recipientId, string text)

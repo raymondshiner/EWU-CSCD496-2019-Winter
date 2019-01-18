@@ -75,7 +75,7 @@ namespace SecretSanta.Domain.Tests.ServiceTests
             var service = new MessageService(context);
             service.AddMessage(Message);
 
-            Message retrievedMessage = context.Messages.Find(Message.Id);
+            Message retrievedMessage = service.FindMessage(Message.Id);
 
             Assert.IsNotNull(retrievedMessage);
             Assert.AreEqual("Cats are awesome!", retrievedMessage.Text);
@@ -94,7 +94,7 @@ namespace SecretSanta.Domain.Tests.ServiceTests
             var service = new MessageService(context);
             service.AddMessage(emptyMessage);
 
-            Message retrievedMessage = context.Messages.Find(emptyMessage.Id);
+            Message retrievedMessage = service.FindMessage(emptyMessage.Id);
 
             Assert.IsNotNull(emptyMessage);
             Assert.IsNull(retrievedMessage?.Text);
