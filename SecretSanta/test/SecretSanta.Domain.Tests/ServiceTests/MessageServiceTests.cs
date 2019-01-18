@@ -84,5 +84,24 @@ namespace SecretSanta.Domain.Tests.ServiceTests
             Assert.AreEqual("Bob", retrievedMessage.Recipient.FirstName);
             Assert.AreEqual("McPerson", retrievedMessage.Recipient.LastName);
         }
+
+        [TestMethod]
+        public void AddMessage_EmptyMessage_EmptyMessageAdded()
+        {
+            Message emptyMessage = new Message();
+
+            var context = new ApplicationDbContext(Options);
+            var service = new MessageService(context);
+            service.AddMessage(emptyMessage);
+
+            Message retrievedMessage = context.Messages.Find(emptyMessage.Id);
+
+            Assert.IsNotNull(emptyMessage);
+            Assert.IsNull(retrievedMessage?.Text);
+            Assert.IsNull(retrievedMessage?.Sender?.FirstName);
+            Assert.IsNull(retrievedMessage?.Sender?.LastName);
+            Assert.IsNull(retrievedMessage?.Recipient?.FirstName);
+            Assert.IsNull(retrievedMessage?.Recipient?.LastName);
+        }
     }
 }
