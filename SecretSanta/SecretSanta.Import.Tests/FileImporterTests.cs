@@ -13,8 +13,7 @@ namespace SecretSanta.Import.Tests
     {
         //For the purpose of this testing class, let abbreviations FNF and LNF be
         //"FirstName First" and "LastName First" accordingly.
-        
-        private FileImporter Importer { get; set; }
+       
 
         [TestInitialize]
         public void InitializeTests()
@@ -23,7 +22,6 @@ namespace SecretSanta.Import.Tests
             Initialize_ValidTestFile2_MarkFNF();
             Initialize_ValidTestFile3_MikeLNF();
             Initialize_InvalidTestFile1_GarbageHeader();
-            Importer = new FileImporter();
         }
 
         private void Initialize_ValidTestFile1_RayFNF()
@@ -102,7 +100,6 @@ namespace SecretSanta.Import.Tests
             File.Delete(path + @"\ValidFile2_MarkFNF.txt");
             File.Delete(path + @"\ValidFile3_MikeLNF.txt");
             File.Delete(path + @"\InvalidFile1_GarbageHeader.txt");
-            Importer = null;
         }
 
         // ==============START OF TESTS==================
@@ -110,7 +107,7 @@ namespace SecretSanta.Import.Tests
         [TestMethod]
         public void ReadInUser_ValidTestFile1_ReturnsValidUserObject()
         {
-            (User user, List<Gift> gifts) = Importer.ReadInUser("ValidFile1_RayFNF.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser("ValidFile1_RayFNF.txt");
 
             Assert.AreEqual("Raymond", user.FirstName);
             Assert.AreEqual("Shiner", user.LastName);
@@ -126,7 +123,7 @@ namespace SecretSanta.Import.Tests
         [TestMethod]
         public void ReadInUser_ValidTestFile2_ReturnsValidUserObject()
         {
-            (User user, List<Gift> gifts)  = Importer.ReadInUser("ValidFile2_MarkFNF.txt");
+            (User user, List<Gift> gifts)  = FileImporter.ReadInUser("ValidFile2_MarkFNF.txt");
 
             Assert.AreEqual("Mark", user.FirstName);
             Assert.AreEqual("Michaelis", user.LastName);
@@ -142,7 +139,7 @@ namespace SecretSanta.Import.Tests
         [TestMethod]
         public void ReadInUser_ValidTestFile3_ReturnsValidUserObject()
         {
-            (User user, List<Gift> gifts) = Importer.ReadInUser("ValidFile3_MikeLNF.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser("ValidFile3_MikeLNF.txt");
 
             Assert.AreEqual("Mike", user.FirstName);
             Assert.AreEqual("Stokes", user.LastName);
@@ -158,7 +155,7 @@ namespace SecretSanta.Import.Tests
         [TestMethod]
         public void ReadInUser_InvalidTestFile1_ReturnsNullTuple()
         {
-            (User user, List<Gift> gifts) = Importer.ReadInUser("InvalidFile1_GarbageHeader.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser("InvalidFile1_GarbageHeader.txt");
 
             Assert.IsNull(user);
             Assert.IsNull(gifts);
@@ -167,7 +164,7 @@ namespace SecretSanta.Import.Tests
         [TestMethod]
         public void ReadInUser_NonExistentTestFile_ReturnsNullTuple()
         {
-            (User user, List<Gift> gifts) = Importer.ReadInUser("NonExistentFile.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser("NonExistentFile.txt");
 
             Assert.IsNull(user);
             Assert.IsNull(gifts);
@@ -178,7 +175,7 @@ namespace SecretSanta.Import.Tests
         {
             string header = "Name: Raymond Shiner";
 
-            bool res = Importer.FileHeaderIsFormattedCorrectly(header);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsTrue(res);
         }
 
@@ -187,14 +184,14 @@ namespace SecretSanta.Import.Tests
         {
             string header = "Name: Raymond Shiner    ";
 
-            bool res = Importer.FileHeaderIsFormattedCorrectly(header);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsTrue(res);
         }
 
         [TestMethod]
         public void FileHeaderIsFormattedCorrectly_NullEntry_ReturnsFalse()
         {
-            bool res = Importer.FileHeaderIsFormattedCorrectly(null);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(null);
             Assert.IsFalse(res);
         }
 
@@ -202,7 +199,7 @@ namespace SecretSanta.Import.Tests
         public void FileHeaderIsFormattedCorrectly_GarbageHeaderLine_ReturnsFalse()
         {
             string header = "LEEROOOOOY JENKINS";
-            bool res = Importer.FileHeaderIsFormattedCorrectly(header);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsFalse(res);
         }
 
@@ -211,7 +208,7 @@ namespace SecretSanta.Import.Tests
         {
             string header = "Name: Shiner, Ray, Something";
 
-            bool res = Importer.FileHeaderIsFormattedCorrectly(header);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsFalse(res);
         }
 
@@ -220,7 +217,7 @@ namespace SecretSanta.Import.Tests
         {
             string header = "Name: Raymond Lawrence Shiner";
 
-            bool res = Importer.FileHeaderIsFormattedCorrectly(header);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsFalse(res);
         }
 
@@ -229,7 +226,7 @@ namespace SecretSanta.Import.Tests
         {
             string header = "Name: ";
 
-            bool res = Importer.FileHeaderIsFormattedCorrectly(header);
+            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsFalse(res);
         }
 
@@ -238,7 +235,7 @@ namespace SecretSanta.Import.Tests
         {
             var header = "Name: Raymond Shiner";
 
-            (string firstName, string lastName) = Importer.ExtractNamesFromHeader(header);
+            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.AreEqual("Raymond", firstName);
             Assert.AreEqual("Shiner", lastName);
@@ -249,7 +246,7 @@ namespace SecretSanta.Import.Tests
         {
             var header = "Name: Mike Stokes";
 
-            (string firstName, string lastName) = Importer.ExtractNamesFromHeader(header);
+            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.AreEqual("Mike", firstName);
             Assert.AreEqual("Stokes", lastName);
@@ -260,7 +257,7 @@ namespace SecretSanta.Import.Tests
         {
             var header = "Name: Michaelis, Mark";
 
-            (string firstName, string lastName) = Importer.ExtractNamesFromHeader(header);
+            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.AreEqual("Mark", firstName);
             Assert.AreEqual("Michaelis", lastName);
@@ -271,7 +268,7 @@ namespace SecretSanta.Import.Tests
         {
             var header = "Name: Michaelis, Mark    ";
 
-            (string firstName, string lastName) = Importer.ExtractNamesFromHeader(header);
+            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.AreEqual("Mark", firstName);
             Assert.AreEqual("Michaelis", lastName);
@@ -282,7 +279,7 @@ namespace SecretSanta.Import.Tests
         {
             var header = "GARBAGE HEADER";
 
-            (string firstName, string lastName) = Importer.ExtractNamesFromHeader(header);
+            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.IsNull(firstName);
             Assert.IsNull(lastName);
@@ -293,7 +290,7 @@ namespace SecretSanta.Import.Tests
         {
             var header = "Name: something, else,";
 
-            (string firstName, string lastName) = Importer.ExtractNamesFromHeader(header);
+            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.IsNull(firstName);
             Assert.IsNull(lastName);

@@ -7,7 +7,7 @@ using SecretSanta.Domain.Services;
 
 namespace SecretSanta.Import
 {
-    public class FileImporter
+    public static class FileImporter
     {
         /// <summary>
         /// Reads in User from given filename and returns a tuple of a User Object with FirstName and LastName
@@ -17,7 +17,7 @@ namespace SecretSanta.Import
         /// <param name="filename"></param>
         /// <returns></returns>
 
-        public (User user, List<Gift> gifts) ReadInUser(string filename)
+        public static (User user, List<Gift> gifts) ReadInUser(string filename)
         {
             string[] lines;
 
@@ -63,7 +63,7 @@ namespace SecretSanta.Import
         /// <param name="header">Correctly formatted header file - 'Name: First Last' or 'Name: Last, First'</param>
         /// <returns></returns>
 
-        public (string firstname, string lastname) ExtractNamesFromHeader(string header)
+        public static (string firstname, string lastname) ExtractNamesFromHeader(string header)
         {
             if (!FileHeaderIsFormattedCorrectly(header))
             {
@@ -101,7 +101,7 @@ namespace SecretSanta.Import
         /// <param name="header"></param>
         /// <returns></returns>
 
-        public bool FileHeaderIsFormattedCorrectly(string header)
+        public static bool FileHeaderIsFormattedCorrectly(string header)
         {
             if (header == null)
                 return false;
