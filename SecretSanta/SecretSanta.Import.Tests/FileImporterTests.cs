@@ -230,66 +230,24 @@ namespace SecretSanta.Import.Tests
             Assert.IsFalse(res);
         }
 
-        [TestMethod]
-        public void ExtractNamesFromHeader_ValidHeaderFirstNameFirstRay_CorrectOutput()
+        [DataTestMethod] // Header, expectedFirstName, expectedLastName
+        [DataRow("Name: Raymond Shiner", "Raymond", "Shiner")]
+        [DataRow("Name: Mike Stokes", "Mike", "Stokes")]
+        [DataRow("Name: Michaelis, Mark", "Mark", "Michaelis")]
+        [DataRow("Name: Michaelis, Mark    ", "Mark", "Michaelis")]
+        public void ExtractNamesFromHeader_ValidHeaders_CorrectOutput(string header, string expectedFirstName, string expectedLastName)
         {
-            var header = "Name: Raymond Shiner";
-
             (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
-            Assert.AreEqual("Raymond", firstName);
-            Assert.AreEqual("Shiner", lastName);
+            Assert.AreEqual(expectedFirstName, firstName);
+            Assert.AreEqual(expectedLastName, lastName);
         }
 
-        [TestMethod]
-        public void ExtractNamesFromHeader_ValidHeaderFirstNameFirstMike_CorrectOutput()
+        [DataTestMethod]
+        [DataRow("GARBAGE HEADER")]
+        [DataRow("Name: something, else,")]
+        public void ExtractNamesFromHeader_InvalidHeaders_ReturnsNullTuple(string header)
         {
-            var header = "Name: Mike Stokes";
-
-            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
-
-            Assert.AreEqual("Mike", firstName);
-            Assert.AreEqual("Stokes", lastName);
-        }
-
-        [TestMethod]
-        public void ExtractNamesFromHeader_ValidHeaderLastNameFirstMark_CorrectOutput()
-        {
-            var header = "Name: Michaelis, Mark";
-
-            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
-
-            Assert.AreEqual("Mark", firstName);
-            Assert.AreEqual("Michaelis", lastName);
-        }
-
-        [TestMethod]
-        public void ExtractNamesFromHeader_ValidHeaderLastNameFirstMarkExtraWhiteSpace_CorrectOutput()
-        {
-            var header = "Name: Michaelis, Mark    ";
-
-            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
-
-            Assert.AreEqual("Mark", firstName);
-            Assert.AreEqual("Michaelis", lastName);
-        }
-
-        [TestMethod]
-        public void ExtractNamesFromHeader_InvalidHeaderGarbageHeader_ReturnsNullTuple()
-        {
-            var header = "GARBAGE HEADER";
-
-            (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
-
-            Assert.IsNull(firstName);
-            Assert.IsNull(lastName);
-        }
-
-        [TestMethod]
-        public void ExtractNamesFromHeader_InValidHeader2Commas_ReturnsNullTuple()
-        {
-            var header = "Name: something, else,";
-
             (string firstName, string lastName) = FileImporter.ExtractNamesFromHeader(header);
 
             Assert.IsNull(firstName);
