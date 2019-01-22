@@ -13,7 +13,6 @@ namespace SecretSanta.Import.Tests
     {
         //For the purpose of this testing class, let abbreviations FNF and LNF be
         //"FirstName First" and "LastName First" accordingly.
-       
 
         [TestInitialize]
         public void InitializeTests()
@@ -104,67 +103,33 @@ namespace SecretSanta.Import.Tests
 
         // ==============START OF TESTS==================
 
-        [TestMethod]
-        public void ReadInUser_ValidTestFile1_ReturnsValidUserObject()
+        [DataTestMethod]
+        [DataRow("ValidFile1_RayFNF.txt", "Raymond", "Shiner", "PS4", "Money", "Peace on Earth")]
+        [DataRow("ValidFile2_MarkFNF.txt", "Mark", "Michaelis", "Fame", "Fortune", "Abs")]
+        [DataRow("ValidFile3_MikeLNF.txt", "Mike", "Stokes", "Money", "More Money", "Pizza")]
+        public void ReadInUser_ValidTestFiles_ReturnsValidUserObject(string filename, string firstname, string lastname, string gift1, string gift2, string gift3)
         {
-            (User user, List<Gift> gifts) = FileImporter.ReadInUser("ValidFile1_RayFNF.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser(filename);
 
-            Assert.AreEqual("Raymond", user.FirstName);
-            Assert.AreEqual("Shiner", user.LastName);
+            Assert.AreEqual(firstname, user.FirstName);
+            Assert.AreEqual(lastname, user.LastName);
 
-            Assert.AreEqual("PS4", gifts[0].Title);
+            Assert.AreEqual(gift1, gifts[0].Title);
             Assert.AreEqual(1, gifts[0].Importance);
-            Assert.AreEqual("Money", gifts[1].Title);
+
+            Assert.AreEqual(gift2, gifts[1].Title);
             Assert.AreEqual(2, gifts[1].Importance);
-            Assert.AreEqual("Peace on Earth", gifts[2].Title);
+
+            Assert.AreEqual(gift3, gifts[2].Title);
             Assert.AreEqual(3, gifts[2].Importance);
         }
 
-        [TestMethod]
-        public void ReadInUser_ValidTestFile2_ReturnsValidUserObject()
+        [DataTestMethod]
+        [DataRow("InvalidFile1_GarbageHeader.txt")]
+        [DataRow("NonExistentFile.txt")]
+        public void ReadInUser_InvalidOrNonExistentTestFiles_ReturnsNullTuple(string filename)
         {
-            (User user, List<Gift> gifts)  = FileImporter.ReadInUser("ValidFile2_MarkFNF.txt");
-
-            Assert.AreEqual("Mark", user.FirstName);
-            Assert.AreEqual("Michaelis", user.LastName);
-
-            Assert.AreEqual("Fame", gifts[0].Title);
-            Assert.AreEqual(1, gifts[0].Importance);
-            Assert.AreEqual("Fortune", gifts[1].Title);
-            Assert.AreEqual(2, gifts[1].Importance);
-            Assert.AreEqual("Abs", gifts[2].Title);
-            Assert.AreEqual(3, gifts[2].Importance);
-        }
-
-        [TestMethod]
-        public void ReadInUser_ValidTestFile3_ReturnsValidUserObject()
-        {
-            (User user, List<Gift> gifts) = FileImporter.ReadInUser("ValidFile3_MikeLNF.txt");
-
-            Assert.AreEqual("Mike", user.FirstName);
-            Assert.AreEqual("Stokes", user.LastName);
-
-            Assert.AreEqual("Money", gifts[0].Title);
-            Assert.AreEqual(1, gifts[0].Importance);
-            Assert.AreEqual("More Money", gifts[1].Title);
-            Assert.AreEqual(2, gifts[1].Importance);
-            Assert.AreEqual("Pizza", gifts[2].Title);
-            Assert.AreEqual(3, gifts[2].Importance);
-        }
-
-        [TestMethod]
-        public void ReadInUser_InvalidTestFile1_ReturnsNullTuple()
-        {
-            (User user, List<Gift> gifts) = FileImporter.ReadInUser("InvalidFile1_GarbageHeader.txt");
-
-            Assert.IsNull(user);
-            Assert.IsNull(gifts);
-        }
-
-        [TestMethod]
-        public void ReadInUser_NonExistentTestFile_ReturnsNullTuple()
-        {
-            (User user, List<Gift> gifts) = FileImporter.ReadInUser("NonExistentFile.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser(filename);
 
             Assert.IsNull(user);
             Assert.IsNull(gifts);
