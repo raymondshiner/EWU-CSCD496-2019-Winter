@@ -170,62 +170,24 @@ namespace SecretSanta.Import.Tests
             Assert.IsNull(gifts);
         }
 
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_CorrectFormat_ReturnsTrue()
+        [DataTestMethod]
+        [DataRow("Name: Raymond Shiner")]
+        [DataRow("Name: Shiner, Raymond")]
+        [DataRow("Name: Mike Stokes    ")]
+        public void FileHeaderIsFormattedCorrectly_CorrectFormat_ReturnsTrue(string header)
         {
-            string header = "Name: Raymond Shiner";
-
             bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsTrue(res);
         }
 
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_CorrectFormatExtraWhiteSpaceOnEitherEnd_ReturnsTrue()
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("LEEROOOOOY JENKINS")]
+        [DataRow("Name: Shiner, Ray, Something")]
+        [DataRow("Name: Raymond Lawrence Shiner")]
+        [DataRow("Name: ")]
+        public void FileHeaderIsFormattedCorrectly_InvalidHeaders_ReturnsFalse(string header)
         {
-            string header = "Name: Raymond Shiner    ";
-
-            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
-            Assert.IsTrue(res);
-        }
-
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_NullEntry_ReturnsFalse()
-        {
-            bool res = FileImporter.FileHeaderIsFormattedCorrectly(null);
-            Assert.IsFalse(res);
-        }
-
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_GarbageHeaderLine_ReturnsFalse()
-        {
-            string header = "LEEROOOOOY JENKINS";
-            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
-            Assert.IsFalse(res);
-        }
-
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_2CommasInHeader_ReturnsFalse()
-        {
-            string header = "Name: Shiner, Ray, Something";
-
-            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
-            Assert.IsFalse(res);
-        }
-
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_3NamesInHeader_ReturnsFalse()
-        {
-            string header = "Name: Raymond Lawrence Shiner";
-
-            bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
-            Assert.IsFalse(res);
-        }
-
-        [TestMethod]
-        public void FileHeaderIsFormattedCorrectly_HeaderFirstPartCorrectNoName_ReturnsFalse()
-        {
-            string header = "Name: ";
-
             bool res = FileImporter.FileHeaderIsFormattedCorrectly(header);
             Assert.IsFalse(res);
         }
