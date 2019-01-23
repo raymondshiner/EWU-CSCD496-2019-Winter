@@ -17,6 +17,7 @@ namespace SecretSanta.Import.Tests
         [TestInitialize]
         public void InitializeTests()
         {
+            DeleteFiles();
             Initialize_ValidTestFile1_RayFNF();
             Initialize_ValidTestFile2_MarkFNF();
             Initialize_ValidTestFile3_MikeLNF();
@@ -91,8 +92,7 @@ namespace SecretSanta.Import.Tests
             }
         }
 
-        [TestCleanup]
-        public void CleanUpTests()
+        private void DeleteFiles()
         {
             string path = System.Environment.CurrentDirectory;
             File.Delete(path + @"\ValidFile1_RayFNF.txt");
@@ -100,6 +100,14 @@ namespace SecretSanta.Import.Tests
             File.Delete(path + @"\ValidFile3_MikeLNF.txt");
             File.Delete(path + @"\InvalidFile1_GarbageHeader.txt");
         }
+
+        [TestCleanup]
+        public void CleanUpTests()
+        {
+            DeleteFiles();
+        }
+
+        
 
         // ==============START OF TESTS==================
 
