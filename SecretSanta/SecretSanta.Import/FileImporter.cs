@@ -77,7 +77,6 @@ namespace SecretSanta.Import
 
 
             var names = fullName.Split(" ");
-
             if (fullName.Contains(","))
             {
                 lastName = names[0].Substring(0, names[0].Length - 1); //cut off , from end of lastname
