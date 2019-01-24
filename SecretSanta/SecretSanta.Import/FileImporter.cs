@@ -23,7 +23,7 @@ namespace SecretSanta.Import
 
             try
             {
-                var path = Path.Combine(System.Environment.CurrentDirectory, filename);
+                var path = Path.Combine(System.IO.Path.GetTempPath(), filename);
 
                 if (File.Exists(path)) // account for relative path
                 {

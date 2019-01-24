@@ -27,7 +27,7 @@ namespace SecretSanta.Import.Tests
 
         private void Initialize_ValidTestFile1_RayFNF()
         {
-            string path = System.Environment.CurrentDirectory;
+            string path = System.IO.Path.GetTempPath();
             path = Path.Combine(path, "ValidFile1_RayFNF.txt");
 
             if (!File.Exists(path))
@@ -44,7 +44,8 @@ namespace SecretSanta.Import.Tests
         
         private void Initialize_ValidTestFile2_MarkFNF()
         {
-            string path = System.Environment.CurrentDirectory;
+            string path = 
+                System.IO.Path.GetTempPath();
             path = Path.Combine(path, "ValidFile2_MarkFNF.txt");
 
             if (!File.Exists(path))
@@ -61,7 +62,7 @@ namespace SecretSanta.Import.Tests
 
         private void Initialize_ValidTestFile3_MikeLNF()
         {
-            string path = System.Environment.CurrentDirectory;
+            string path = System.IO.Path.GetTempPath();
             path = Path.Combine("ValidFile3_MikeLNF.txt");
 
             if (!File.Exists(path))
@@ -78,7 +79,7 @@ namespace SecretSanta.Import.Tests
 
         private void Initialize_InvalidTestFile1_GarbageHeader()
         {
-            string path = System.Environment.CurrentDirectory;
+            string path = System.IO.Path.GetTempPath();
             path = Path.Combine(path, "InvalidFile1_GarbageHeader.txt");
 
             if (!File.Exists(path))
@@ -95,7 +96,7 @@ namespace SecretSanta.Import.Tests
 
         private void DeleteFiles()
         {
-            string path = System.Environment.CurrentDirectory;
+            string path = System.IO.Path.GetTempPath();
             File.Delete(Path.Combine(path, @"\ValidFile1_RayFNF.txt"));
             File.Delete(Path.Combine(path, @"\ValidFile2_MarkFNF.txt"));
             File.Delete(Path.Combine(path, @"\ValidFile3_MikeLNF.txt"));
@@ -136,7 +137,7 @@ namespace SecretSanta.Import.Tests
         [TestMethod]
         public void ReadInUser_AbsolutePathValidTestFile_ReturnsValidUserObject()
         {
-            var path = Path.Combine(System.Environment.CurrentDirectory, "ValidFile1_RayFNF.txt");
+            var path = Path.Combine(System.IO.Path.GetTempPath(), "ValidFile1_RayFNF.txt");
             (User user, List<Gift> gifts) = FileImporter.ReadInUser(path);
 
             Assert.AreEqual("Raymond", user.FirstName);
