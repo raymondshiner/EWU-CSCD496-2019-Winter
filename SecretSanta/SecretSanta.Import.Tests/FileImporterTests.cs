@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Domain.Models;
@@ -129,6 +130,25 @@ namespace SecretSanta.Import.Tests
             Assert.AreEqual(2, gifts[1].Importance);
 
             Assert.AreEqual(gift3, gifts[2].Title);
+            Assert.AreEqual(3, gifts[2].Importance);
+        }
+
+        [TestMethod]
+        public void ReadInUser_AbsolutePathValidTestFile_ReturnsValidUserObject()
+        {
+            var path = Path.Combine(System.Environment.CurrentDirectory, "ValidFile1_RayFNF.txt");
+            (User user, List<Gift> gifts) = FileImporter.ReadInUser(path);
+
+            Assert.AreEqual("Raymond", user.FirstName);
+            Assert.AreEqual("Shiner", user.LastName);
+
+            Assert.AreEqual("PS4", gifts[0].Title);
+            Assert.AreEqual(1, gifts[0].Importance);
+
+            Assert.AreEqual("Money", gifts[1].Title);
+            Assert.AreEqual(2, gifts[1].Importance);
+
+            Assert.AreEqual("Peace on Earth", gifts[2].Title);
             Assert.AreEqual(3, gifts[2].Importance);
         }
 
