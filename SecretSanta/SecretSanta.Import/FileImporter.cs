@@ -23,8 +23,17 @@ namespace SecretSanta.Import
 
             try
             {
-                lines = System.IO.File.ReadAllLines(
-                    System.Environment.CurrentDirectory + @"\" + filename);
+                var path = Path.Combine(System.Environment.CurrentDirectory, filename);
+
+                if (File.Exists(path)) // account for relative path
+                {
+                    lines = System.IO.File.ReadAllLines(path);
+                }
+
+                else // account for absolute path
+                {
+                    lines = System.IO.File.ReadAllLines(filename);
+                }
             }
 
             catch (Exception)

@@ -27,7 +27,7 @@ namespace SecretSanta.Import.Tests
         private void Initialize_ValidTestFile1_RayFNF()
         {
             string path = System.Environment.CurrentDirectory;
-            path += @"\ValidFile1_RayFNF.txt";
+            path = Path.Combine(path, "ValidFile1_RayFNF.txt");
 
             if (!File.Exists(path))
             {
@@ -44,7 +44,7 @@ namespace SecretSanta.Import.Tests
         private void Initialize_ValidTestFile2_MarkFNF()
         {
             string path = System.Environment.CurrentDirectory;
-            path += @"\ValidFile2_MarkFNF.txt";
+            path = Path.Combine(path, "ValidFile2_MarkFNF.txt");
 
             if (!File.Exists(path))
             {
@@ -61,7 +61,7 @@ namespace SecretSanta.Import.Tests
         private void Initialize_ValidTestFile3_MikeLNF()
         {
             string path = System.Environment.CurrentDirectory;
-            path += @"\ValidFile3_MikeLNF.txt";
+            path = Path.Combine("ValidFile3_MikeLNF.txt");
 
             if (!File.Exists(path))
             {
@@ -78,7 +78,7 @@ namespace SecretSanta.Import.Tests
         private void Initialize_InvalidTestFile1_GarbageHeader()
         {
             string path = System.Environment.CurrentDirectory;
-            path += @"\InvalidFile1_GarbageHeader.txt";
+            path = Path.Combine(path, "InvalidFile1_GarbageHeader.txt");
 
             if (!File.Exists(path))
             {
@@ -95,10 +95,10 @@ namespace SecretSanta.Import.Tests
         private void DeleteFiles()
         {
             string path = System.Environment.CurrentDirectory;
-            File.Delete(path + @"\ValidFile1_RayFNF.txt");
-            File.Delete(path + @"\ValidFile2_MarkFNF.txt");
-            File.Delete(path + @"\ValidFile3_MikeLNF.txt");
-            File.Delete(path + @"\InvalidFile1_GarbageHeader.txt");
+            File.Delete(Path.Combine(path, @"\ValidFile1_RayFNF.txt"));
+            File.Delete(Path.Combine(path, @"\ValidFile2_MarkFNF.txt"));
+            File.Delete(Path.Combine(path, @"\ValidFile3_MikeLNF.txt"));
+            File.Delete(Path.Combine(path, @"\InvalidFile1_GarbageHeader.txt"));
         }
 
         [TestCleanup]
