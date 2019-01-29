@@ -61,5 +61,7 @@ namespace SecretSanta.Api.Tests
             //This check ensures that the service was not called
             Assert.AreEqual(0, testService.GetGiftsForUser_UserId);
         }
+
+
     }
 }
