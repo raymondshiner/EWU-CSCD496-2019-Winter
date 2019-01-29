@@ -6,5 +6,6 @@ namespace SecretSanta.Domain.Services
     public interface IGiftService
     {
         List<Gift> GetGiftsForUser(int userId);
+        Gift AddGiftToUser(Gift gift, int userId);
     }
 }

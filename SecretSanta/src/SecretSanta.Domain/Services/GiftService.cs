@@ -41,6 +41,17 @@ namespace SecretSanta.Domain.Services
             return DbContext.Gifts.Where(g => g.UserId == userId).ToList();
         }
 
+        public Gift AddGiftToUser(Gift gift, int userId)
+        {
+            if (gift == null) throw new ArgumentNullException(nameof(gift));
+
+            gift.UserId = userId;
+            DbContext.Gifts.Add(gift);
+            DbContext.SaveChanges();
+
+            return gift;
+        }
+
         public void RemoveGift(Gift gift)
         {
             if (gift == null) throw new ArgumentNullException(nameof(gift));
