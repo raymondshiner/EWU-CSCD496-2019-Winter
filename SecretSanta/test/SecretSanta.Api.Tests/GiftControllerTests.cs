@@ -88,7 +88,13 @@ namespace SecretSanta.Api.Tests
 
             Assert.IsNotNull(result, "Result was not a 200");
             Assert.AreEqual<int>(4, testService.AddGiftToUser_UserId);
-            Assert.AreEqual(giftDTO, testService.AddGiftToUser_Gift);
+
+            Assert.AreEqual(giftDTO.Id, testService.AddGiftToUser_Gift.Id);
+            Assert.AreEqual(giftDTO.Description, testService.AddGiftToUser_Gift.Description);
+            Assert.AreEqual(giftDTO.Title, testService.AddGiftToUser_Gift.Title);
+            Assert.AreEqual(giftDTO.OrderOfImportance, testService.AddGiftToUser_Gift.OrderOfImportance);
+            Assert.AreEqual(giftDTO.Url, testService.AddGiftToUser_Gift.Url);
+
         }
 
     }
