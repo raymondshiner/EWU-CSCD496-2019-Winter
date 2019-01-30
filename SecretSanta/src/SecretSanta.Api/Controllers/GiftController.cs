@@ -44,16 +44,8 @@ namespace SecretSanta.Api.Controllers
                 return BadRequest();
             }
 
-            var newGift = new Gift
-            {
-                Url = gift.Url,
-                Id = gift.Id,
-                Description = gift.Description,
-                Title = gift.Title,
-                OrderOfImportance = gift.OrderOfImportance
-            };
-
-            _GiftService.AddGiftToUser(newGift, userId);
+            var domainGift = DTO.Gift.ToEntity(gift);
+            _GiftService.AddGiftToUser(domainGift, userId);
 
             return Ok();
         }
