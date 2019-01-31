@@ -41,5 +41,22 @@ namespace SecretSanta.Api.Tests
         {
             DeleteGroup_GroupId = groupId;
         }
+
+        public int AddUserToGroup_GroupId { get; set; }
+        public User AddUserToGroup_User { get; set; }
+        public void AddUserToGroup(int groupId, User user)
+        {
+            AddUserToGroup_GroupId = groupId;
+            AddUserToGroup_User = user;
+        }
+
+        public int RemoveUserFromGroup_GroupId { get; set; }
+        public int RemoveUserFromGroup_UserId { get; set; }
+
+        public void RemoveUserFromGroup(int groupId, int userId)
+        {
+            RemoveUserFromGroup_GroupId = groupId;
+            RemoveUserFromGroup_UserId = userId;
+        }
     }
 }

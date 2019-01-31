@@ -40,6 +40,40 @@ namespace SecretSanta.Domain.Services
             DbContext.SaveChanges();
         }
 
+        public void AddUserToGroup(int groupId, User user)
+        {
+            var group = DbContext.Groups.Find(groupId);
+            var groupUserList = new List<GroupUser>();
+            
+            var groupUser = new GroupUser
+            {
+                Group = group,
+                User = user
+            };
+
+            groupUserList.Add(groupUser);
+            group.GroupUsers = groupUserList;
+            user.GroupUsers = groupUserList;
+            DbContext.Groups.Update(group);
+            DbContext.SaveChanges();
+        }
+
+        public void RemoveUserFromGroup(int groupId, int userId)
+        {
+            var group = DbContext.Groups.Find(groupId);
+            if (group != null)
+            {
+                group?.GroupUsers?.Remove(new GroupUser
+                {
+                    GroupId = groupId,
+                    UserId = userId
+                });
+
+                DbContext.Groups.Update(group);
+                DbContext.SaveChanges();
+            }
+        }
+
         public List<Group> FetchAll()
         {
             return DbContext.Groups.ToList();

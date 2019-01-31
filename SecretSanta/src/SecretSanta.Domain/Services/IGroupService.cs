@@ -11,5 +11,9 @@ namespace SecretSanta.Domain.Services
         Group AddGroup(Group @group);
         Group UpdateGroup(Group @group);
         void DeleteGroup(int groupId);
+
+        void AddUserToGroup(int groupId, User user);
+
+        void RemoveUserFromGroup(int groupId, int userId);
     }
 }
