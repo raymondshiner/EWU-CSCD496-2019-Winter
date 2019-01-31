@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SecretSanta.Domain.Models;
 using SecretSanta.Domain.Services;
 
 namespace SecretSanta.Api.Controllers
@@ -71,6 +72,44 @@ namespace SecretSanta.Api.Controllers
             }
 
             _GroupService.DeleteGroup(groupId);
+            return Ok();
+        }
+
+        // POST api/Group
+        [HttpPost("{groupId}")]
+        public ActionResult AddUserToGroup(int groupId, DTO.User user)
+        {
+            if (groupId <= 0)
+            {
+                return NotFound();
+            }
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var domUser = DTO.User.ToEntity(user);
+            _GroupService.AddUserToGroup(groupId, domUser);
+
+            return Ok();
+        }
+
+        // DELETE api/Group/5
+        [HttpDelete("{userId}")]
+        public ActionResult RemoveUserFromGroup(int groupId, int userId)
+        {
+            if (groupId <= 0)
+            {
+                return NotFound();
+            }
+
+            if (userId <= 0)
+            {
+                return NotFound();
+            }
+
+            _GroupService.RemoveUserFromGroup(userId, groupId);
             return Ok();
         }
     }

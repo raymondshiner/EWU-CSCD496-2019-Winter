@@ -141,6 +141,95 @@ namespace SecretSanta.Api.Tests
             Assert.AreEqual(0, testService.DeleteGroup_GroupId);
         }
 
+        [TestMethod]
+        public void AddUserToGroup_UserIsAddedToGroup()
+        {
+            var user = new User
+            {
+                Id = 4,
+                FirstName = "Ray",
+                LastName = "Pizza"
+            };
+
+            var testService = new TestableGroupService
+            {
+                AddUserToGroup_User = user
+            };
+            var controller = new GroupController(testService);
+            var result = controller.AddUserToGroup(4, new DTO.User(user));
+
+            Assert.IsTrue(result is OkResult);
+            Assert.AreEqual(4, testService.AddUserToGroup_GroupId);
+            Assert.AreEqual(user.FirstName, testService.AddUserToGroup_User.FirstName);
+        }
+
+        [TestMethod]
+        public void AddUserToGroup_NegativeGroupIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGroupService();
+            var controller = new GroupController(testService);
+            var result = controller.AddUserToGroup(-1, new DTO.User());
+
+            Assert.IsTrue(result is NotFoundResult);
+            Assert.AreEqual(0, testService.AddUserToGroup_GroupId);
+        }
+
+        [TestMethod]
+        public void AddUserToGroup_NullUserReturnsBadRequestResult()
+        {
+            var testService = new TestableGroupService();
+            var controller = new GroupController(testService);
+            var result = controller.AddUserToGroup(4, null);
+
+            Assert.IsTrue(result is BadRequestResult);
+            Assert.AreEqual(0, testService.AddUserToGroup_GroupId);
+        }
+
+        [TestMethod]
+        public void RemoveUserFromGroup_UserIsRemoved()
+        {
+            var testService = new TestableGroupService();
+            var controller = new GroupController(testService);
+
+            int groupId = 2;
+            int userId = 5;
+            var result = controller.RemoveUserFromGroup(userId, groupId);
+
+            Assert.IsTrue(result is OkResult);
+            Assert.AreEqual(groupId, testService.RemoveUserFromGroup_GroupId);
+            Assert.AreEqual(userId, testService.RemoveUserFromGroup_UserId);
+        }
+
+        [TestMethod]
+        public void RemoveUserFromGroup_NegativeUserIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGroupService();
+            var controller = new GroupController(testService);
+
+            int groupId = 2;
+            int userId = -5;
+            var result = controller.RemoveUserFromGroup(userId, groupId);
+
+            Assert.IsTrue(result is NotFoundResult);
+            Assert.AreEqual(0, testService.RemoveUserFromGroup_GroupId);
+            Assert.AreEqual(0, testService.RemoveUserFromGroup_UserId);
+        }
+
+        [TestMethod]
+        public void RemoveUserFromGroup_NegativeGroupIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGroupService();
+            var controller = new GroupController(testService);
+
+            int groupId = -2;
+            int userId = 5;
+            var result = controller.RemoveUserFromGroup(userId, groupId);
+
+            Assert.IsTrue(result is NotFoundResult);
+            Assert.AreEqual(0, testService.RemoveUserFromGroup_GroupId);
+            Assert.AreEqual(0, testService.RemoveUserFromGroup_UserId);
+        }
+
         private bool GroupObjectsAreEqual(Group group1, Group group2)
         {
             return group1.Id == group2.Id && group1.Name == group2.Name;
