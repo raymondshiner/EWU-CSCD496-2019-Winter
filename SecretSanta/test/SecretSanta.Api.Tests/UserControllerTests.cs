@@ -53,7 +53,7 @@ namespace SecretSanta.Api.Tests
         }
 
         [TestMethod]
-        public void CreateUser_AddsAUser()
+        public void AddUser_AddsAUser()
         {
             var user = new User
             {
@@ -69,7 +69,7 @@ namespace SecretSanta.Api.Tests
 
             var controller = new UserController(testService);
             
-            var result = controller.CreateUser(new DTO.User(user));
+            var result = controller.AddUser(new DTO.User(user));
             bool res = UserObjectsAreEqual(DTO.User.ToEntity(result.Value), user);
             bool serviceInvoked = UserObjectsAreEqual(user, testService.AddUser_User);
 
@@ -78,12 +78,12 @@ namespace SecretSanta.Api.Tests
         }
 
         [TestMethod]
-        public void CreateUser_NullUserReturnsBadRequest()
+        public void AddUser_NullUserReturnsBadRequest()
         {
             var testService = new TestableUserService();
             var controller = new UserController(testService);
 
-            var result = controller.CreateUser(null);
+            var result = controller.AddUser(null);
 
             Assert.IsTrue(result.Result is BadRequestResult);
         }
