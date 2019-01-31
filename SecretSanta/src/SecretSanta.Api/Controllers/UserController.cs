@@ -33,7 +33,7 @@ namespace SecretSanta.Api.Controllers
 
         // POST api/User
         [HttpPost]
-        public ActionResult<DTO.User> CreateUser(DTO.User user)
+        public ActionResult<DTO.User> AddUser(DTO.User user)
         {
             if (user == null)
             {
