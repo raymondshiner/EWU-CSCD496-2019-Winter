@@ -32,6 +32,26 @@ namespace SecretSanta.Api.Controllers
             return new DTO.Group(group);
         }
 
+        // GET api/Group/5
+        [HttpGet]
+        public ActionResult<List<DTO.Group>> GetAllGroups()
+        {
+            var groupList = _GroupService.GetAllGroups();
+            return groupList.Select(x => new DTO.Group(x)).ToList();
+        }
+
+        [HttpGet("user/{groupId}")]
+        public ActionResult<List<DTO.User>> GetAllUsersInGroup(int groupId)
+        {
+            if (groupId <= 0)
+            {
+                return NotFound();
+            }
+
+            var usersFromGroup = _GroupService.GetAllUsersInGroup(groupId);
+            return usersFromGroup.Select(x => new DTO.User(x)).ToList();
+        }
+
         // POST api/Group
         [HttpPost]
         public ActionResult<DTO.Group> AddGroup(DTO.Group group)

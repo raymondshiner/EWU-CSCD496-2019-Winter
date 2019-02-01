@@ -14,6 +14,18 @@ namespace SecretSanta.Domain.Services
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        public List<Group> GetAllGroups()
+        {
+            var groupList = new List<Group>();
+
+            foreach (var group in DbContext.Groups)
+            {
+                groupList.Add(group);
+            }
+
+            return groupList;
+        }
+
         public Group GetGroup(int groupId)
         {
             return DbContext.Groups.Find(groupId);
@@ -66,6 +78,20 @@ namespace SecretSanta.Domain.Services
             group.GroupUsers.Remove(groupUser);
 
             DbContext.SaveChanges();
+        }
+
+        public List<User> GetAllUsersInGroup(int groupId)
+        {
+            var group = DbContext.Groups.Find(groupId);
+
+            var userList = new List<User>();
+
+            foreach(GroupUser groupUser in group.GroupUsers)
+            {
+                userList.Add(groupUser.User);
+            }
+
+            return userList;
         }
 
         public List<Group> FetchAll()

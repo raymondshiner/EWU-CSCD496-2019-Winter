@@ -11,6 +11,15 @@ namespace SecretSanta.Api.Tests
         public Group GetGroup_Return { get; set; }
         public int GetGroup_GroupId { get; set; }
 
+        public List<Group> GetAllGroups_Return { get; set; }
+        public bool GetAllGroups_ServiceInvoked = false;
+
+        public List<Group> GetAllGroups()
+        {
+            GetAllGroups_ServiceInvoked = true;
+            return GetAllGroups_Return;
+        }
+
         public Group GetGroup(int groupId)
         {
             GetGroup_GroupId = groupId;
@@ -57,6 +66,15 @@ namespace SecretSanta.Api.Tests
         {
             RemoveUserFromGroup_GroupId = groupId;
             RemoveUserFromGroup_UserId = userId;
+        }
+
+        public List<User> GetAllUsersInGroup_Return { get; set; }
+        public int GetAllUsersInGroup_GroupId { get; set; }
+
+        public List<User> GetAllUsersInGroup(int groupId)
+        {
+            GetAllUsersInGroup_GroupId = groupId;
+            return GetAllUsersInGroup_Return;
         }
     }
 }

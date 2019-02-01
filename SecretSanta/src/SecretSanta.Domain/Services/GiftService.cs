@@ -52,7 +52,7 @@ namespace SecretSanta.Domain.Services
             DbContext.SaveChanges();
         }
 
-        public List<Gift> GetGiftsForUser(int userId)
+        public List<Gift> GetAllGiftsForUser(int userId)
         {
             return DbContext.Gifts.Where(g => g.UserId == userId).ToList();
         }

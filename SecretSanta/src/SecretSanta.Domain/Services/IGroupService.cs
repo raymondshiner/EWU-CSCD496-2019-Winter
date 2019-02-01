@@ -7,6 +7,8 @@ namespace SecretSanta.Domain.Services
 {
     public interface IGroupService
     {
+        List<Group> GetAllGroups();
+
         Group GetGroup(int groupId);
         Group AddGroup(Group @group);
         Group UpdateGroup(Group @group);
@@ -15,5 +17,6 @@ namespace SecretSanta.Domain.Services
         void AddUserToGroup(int groupId, User user);
 
         void RemoveUserFromGroup(int groupId, int userId);
+        List<User> GetAllUsersInGroup(int groupId);
     }
 }

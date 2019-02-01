@@ -20,13 +20,13 @@ namespace SecretSanta.Api.Controllers
 
         // GET api/Gift/5
         [HttpGet("{userId}")]
-        public ActionResult<List<DTO.Gift>> GetGiftForUser(int userId)
+        public ActionResult<List<DTO.Gift>> GetAllGiftsForUser(int userId)
         {
             if (userId <= 0)
             {
                 return NotFound();
             }
-            List<Gift> databaseUsers = _GiftService.GetGiftsForUser(userId);
+            List<Gift> databaseUsers = _GiftService.GetAllGiftsForUser(userId);
 
             return databaseUsers.Select(x => new DTO.Gift(x)).ToList();
         }

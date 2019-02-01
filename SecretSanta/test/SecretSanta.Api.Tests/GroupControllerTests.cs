@@ -230,6 +230,66 @@ namespace SecretSanta.Api.Tests
             Assert.AreEqual(0, testService.RemoveUserFromGroup_UserId);
         }
 
+        [TestMethod]
+        public void GetAllGroups_ReturnsAllGroups()
+        {
+            var testService = new TestableGroupService
+            {
+                GetAllGroups_Return = new List<Group>()
+            };
+
+            var group = new Group
+            {
+                Id = 4,
+                Name = "Levels"
+            };
+
+            testService.GetAllGroups_Return.Add(group);
+
+            var controller = new GroupController(testService);
+
+            var result = controller.GetAllGroups();
+
+            Assert.AreEqual(group.Id, result.Value[0].Id);
+            Assert.AreEqual(group.Name, result.Value[0].Name);
+            Assert.IsTrue(testService.GetAllGroups_ServiceInvoked);
+        }
+
+        [TestMethod]
+        public void GetAllUsersInGroup_ReturnsAllUsers()
+        {
+            var user = new User
+            {
+                Id = 4,
+                FirstName = "Ray"
+            };
+
+            var testService = new TestableGroupService
+            {
+                GetAllUsersInGroup_Return = new List<User> {user}
+            };;
+
+            var controller = new GroupController(testService);
+
+            var result = controller.GetAllUsersInGroup(1);
+
+            Assert.AreEqual(user.Id, result.Value[0].Id);
+            Assert.AreEqual(user.FirstName, result.Value[0].FirstName);
+            Assert.AreEqual(1, testService.GetAllUsersInGroup_GroupId);
+        }
+
+        [TestMethod]
+        public void GetAllUsersInGroup_NegativeGroupIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGroupService();
+            var controller = new GroupController(testService);
+
+            var result = controller.GetAllUsersInGroup(-4);
+
+            Assert.IsTrue(result.Result is NotFoundResult);
+            Assert.AreEqual(0, testService.GetAllUsersInGroup_GroupId);
+        }
+
         private bool GroupObjectsAreEqual(Group group1, Group group2)
         {
             return group1.Id == group2.Id && group1.Name == group2.Name;

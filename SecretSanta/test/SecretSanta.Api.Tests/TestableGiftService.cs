@@ -6,13 +6,13 @@ namespace SecretSanta.Api.Tests
 {
     public class TestableGiftService : IGiftService
     {
-        public List<Gift> GetGiftsForUser_Return { get; set; }
-        public int GetGiftsForUser_UserId { get; set; }
+        public List<Gift> GetAllGiftsForUser_Return { get; set; }
+        public int GetAllGiftsForUser_UserId { get; set; }
 
-        public List<Gift> GetGiftsForUser(int userId)
+        public List<Gift> GetAllGiftsForUser(int userId)
         {
-            GetGiftsForUser_UserId = userId;
-            return GetGiftsForUser_Return;
+            GetAllGiftsForUser_UserId = userId;
+            return GetAllGiftsForUser_Return;
         }
 
 
