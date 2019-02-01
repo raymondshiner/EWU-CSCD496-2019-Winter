@@ -43,18 +43,14 @@ namespace SecretSanta.Domain.Services
         public void AddUserToGroup(int groupId, User user)
         {
             var group = DbContext.Groups.Find(groupId);
-            var groupUserList = new List<GroupUser>();
-            
             var groupUser = new GroupUser
             {
-                Group = group,
-                User = user
+                UserId = user.Id,
+                GroupId = group.Id
             };
 
-            groupUserList.Add(groupUser);
-            group.GroupUsers = groupUserList;
-            user.GroupUsers = groupUserList;
-            DbContext.Groups.Update(group);
+            group.GroupUsers = new List<GroupUser> { groupUser };
+            
             DbContext.SaveChanges();
         }
 

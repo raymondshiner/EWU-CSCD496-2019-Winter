@@ -15,9 +15,9 @@ Several of these items may already be completed on the Assignmednt3 branch. Ensu
   - Use mock/stub implementations of the services to test your controllers. These tests should not interact with the database or actual services.
   - The generated Startup and Program classes do *not* need to be unit tested
 - The controllers should expose the following functionality
-  - Create/Update/Delete users
-  - Create/Update/Delete groups
-  - Add/Remove users from groups
+  - Create/Update/Delete users - DONE
+  - Create/Update/Delete groups - DONE
+  - Add/Remove users from groups - DONE
   - Create/Update/Delete gift for a user
   - Query all groups
   - Query all users in a group
