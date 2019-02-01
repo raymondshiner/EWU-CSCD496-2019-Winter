@@ -35,6 +35,22 @@ namespace SecretSanta.Domain.Services
 
             return gift;
         }
+        
+
+        public void DeleteGiftFromUser(int giftId, int userId)
+        {
+            if (giftId <= 0 || userId <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var user = DbContext.Users.Find(userId);
+            var gift = DbContext.Gifts.Find(giftId);
+            
+            user.Gifts.Remove(gift);
+
+            DbContext.SaveChanges();
+        }
 
         public List<Gift> GetGiftsForUser(int userId)
         {

@@ -97,5 +97,120 @@ namespace SecretSanta.Api.Tests
 
         }
 
+        [TestMethod]
+        public void UpdateGiftForUser_UpdatesGift()
+        {
+            var giftToReturn = new Gift
+            {
+                Id = 2,
+                Title = "Xbox",
+                Description = "It's Cool"
+            };
+
+            var testService = new TestableGiftService 
+            {
+                UpdateGiftForUser_Return = giftToReturn
+            };
+
+            var controller = new GiftController(testService);
+
+            var giftPassedIn = new Gift
+            {
+                Id = 4,
+                Title = "new title",
+                Description = "new description"
+            };
+
+            var resultGift = controller.UpdateGiftForUser(4, new DTO.Gift(giftPassedIn));
+
+            Assert.AreEqual<int>(giftToReturn.Id, resultGift.Value.Id);
+            Assert.AreEqual<string>(giftToReturn.Title, resultGift.Value.Title);
+            Assert.AreEqual<string>(giftToReturn.Description, resultGift.Value.Description);
+
+            Assert.AreEqual<int>(giftPassedIn.Id, testService.UpdateGiftForUser_Gift.Id);
+            Assert.AreEqual<string>(giftPassedIn.Title, testService.UpdateGiftForUser_Gift.Title);
+            Assert.AreEqual<string>(giftPassedIn.Description, testService.UpdateGiftForUser_Gift.Description);
+
+            Assert.AreEqual<int>(4, testService.UpdateGiftForUser_UserId);
+        }
+
+        [TestMethod]
+        public void UpdateGiftForUser_NegativeUserIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGiftService();
+            var controller = new GiftController(testService);
+
+            int giftId = -5;
+
+            var result = controller.UpdateGiftForUser(giftId, new DTO.Gift());
+
+            Assert.IsTrue(result.Result is NotFoundResult);
+            Assert.AreEqual(0, testService.UpdateGiftForUser_UserId);
+            Assert.IsNull(testService.UpdateGiftForUser_Gift);
+        }
+
+        [TestMethod]
+        public void UpdateGiftForUser_NullGiftReturnsBadRequestResult()
+        {
+            var testService = new TestableGiftService();
+            var controller = new GiftController(testService);
+
+            int giftId = 5;
+
+            var result = controller.UpdateGiftForUser(giftId, null);
+
+            Assert.IsTrue(result.Result is BadRequestResult);
+            Assert.AreEqual(0, testService.UpdateGiftForUser_UserId);
+            Assert.IsNull(testService.UpdateGiftForUser_Gift);
+        }
+
+        [TestMethod]
+        public void DeleteGiftFromUser_DeletesGift()
+        {
+            var testService = new TestableGiftService();
+            var controller = new GiftController(testService);
+
+            int giftId = 5;
+            int userId = 3;
+
+            var result = controller.DeleteGiftFromUser(giftId, userId);
+
+            Assert.IsTrue(result is OkResult);
+            Assert.AreEqual<int>(5, testService.DeleteGiftFromUser_GiftId);
+            Assert.AreEqual<int>(3, testService.DeleteGiftFromUser_UserId);
+        }
+
+        [TestMethod]
+        public void DeleteGiftFromUser_NegativeUserIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGiftService();
+            var controller = new GiftController(testService);
+
+            int giftId = 5;
+            int userId = -3;
+
+            var result = controller.DeleteGiftFromUser(giftId, userId);
+
+            Assert.IsTrue(result is NotFoundResult);
+            Assert.AreEqual<int>(0, testService.DeleteGiftFromUser_GiftId);
+            Assert.AreEqual<int>(0, testService.DeleteGiftFromUser_UserId);
+        }
+
+        [TestMethod]
+        public void DeleteGiftFromUser_NegativeGiftIdReturnsNotFoundResult()
+        {
+            var testService = new TestableGiftService();
+            var controller = new GiftController(testService);
+
+            int giftId = -5;
+            int userId = 3;
+
+            var result = controller.DeleteGiftFromUser(giftId, userId);
+
+            Assert.IsTrue(result is NotFoundResult);
+            Assert.AreEqual<int>(0, testService.DeleteGiftFromUser_GiftId);
+            Assert.AreEqual<int>(0, testService.DeleteGiftFromUser_UserId);
+        }
+
     }
 }

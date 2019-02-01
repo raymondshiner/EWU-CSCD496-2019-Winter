@@ -57,17 +57,15 @@ namespace SecretSanta.Domain.Services
         public void RemoveUserFromGroup(int groupId, int userId)
         {
             var group = DbContext.Groups.Find(groupId);
-            if (group != null)
+            var groupUser = new GroupUser
             {
-                group?.GroupUsers?.Remove(new GroupUser
-                {
-                    GroupId = groupId,
-                    UserId = userId
-                });
+                UserId = userId,
+                GroupId = group.Id
+            };
 
-                DbContext.Groups.Update(group);
-                DbContext.SaveChanges();
-            }
+            group.GroupUsers.Remove(groupUser);
+
+            DbContext.SaveChanges();
         }
 
         public List<Group> FetchAll()
