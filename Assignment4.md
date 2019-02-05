@@ -6,7 +6,7 @@ Peer code reviews will not be required for this assignment, so you won't need to
 things turned in until Thursday at midnight
 
 ## Enhancements to Swashbuckle documentation
-- Add a reference to Microsoft.AspNetCore.Mvc.Analyzers and make sure there are no warnings being generated
+- Add a reference to Microsoft.AspNetCore.Mvc.Api.Analyzers and make sure there are no warnings being generated
 - Add proper ProducesResponseType and Produces attributes
   - this can be done individually or by applying the global ApiConventionType attribute to the assembly and using the DefaultApiConventions
 
