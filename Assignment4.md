@@ -28,4 +28,4 @@ things turned in until Thursday at midnight
   - User should require a FirstName
   - Create unit tests to verify that viewModel requirements are working correctly
 
-## Modify all controller actions to return an IActionResult instead of ActionResult or ActionResult<T>
+## Modify all controller actions to return an IActionResult instead of ActionResult or ActionResult&lt;T&gt;
