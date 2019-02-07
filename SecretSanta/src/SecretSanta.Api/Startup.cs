@@ -1,14 +1,19 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Linq;
+using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using SecretSanta.Domain.Models;
 using SecretSanta.Domain.Services;
 using SecretSanta.Domain.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace SecretSanta.Api
 {
@@ -28,11 +33,9 @@ namespace SecretSanta.Api
 
             services.AddScoped<IGiftService, GiftService>();
 
-            var connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
             services.AddDbContext<ApplicationDbContext>(builder =>
             {
-                builder.UseSqlite(connection);
+                builder.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -40,6 +43,12 @@ namespace SecretSanta.Api
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
+
+            var dependencyContext = DependencyContext.Default;
+            var assemblies = dependencyContext.RuntimeLibraries.SelectMany(lib =>
+                lib.GetDefaultAssemblyNames(dependencyContext)
+                    .Where(a => a.Name.Contains("SecretSanta")).Select(Assembly.Load)).ToArray();
+            services.AddAutoMapper(assemblies);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

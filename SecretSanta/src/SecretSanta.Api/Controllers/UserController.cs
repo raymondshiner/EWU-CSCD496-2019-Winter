@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Api.ViewModels;
 using SecretSanta.Domain.Services.Interfaces;
@@ -14,6 +15,7 @@ namespace SecretSanta.Api.Controllers
     public class UserController : ControllerBase
     {
         private IUserService UserService { get; }
+        private IMapper Mapper { get; set; }
 
         public UserController(IUserService userService)
         {
@@ -49,8 +51,7 @@ namespace SecretSanta.Api.Controllers
                 return NotFound();
             }
 
-            foundUser.FirstName = userViewModel.FirstName;
-            foundUser.LastName = userViewModel.LastName;
+            Mapper.Map<UserViewModel>(foundUser);
 
             var persistedUser = UserService.UpdateUser(foundUser);
 
