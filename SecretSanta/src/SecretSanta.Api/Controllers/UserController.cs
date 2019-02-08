@@ -35,7 +35,7 @@ namespace SecretSanta.Api.Controllers
 
             var persistedUser = UserService.AddUser(Mapper.Map<User>(userInputViewModel));
 
-            return Ok(persistedUser);
+            return CreatedAtAction(nameof(Post), new {id = persistedUser.Id}, Mapper.Map<UserViewModel>(persistedUser));
         }
 
         // PUT api/<controller>/5
