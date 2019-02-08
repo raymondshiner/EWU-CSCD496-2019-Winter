@@ -34,21 +34,5 @@ namespace SecretSanta.Api.ViewModels
 
             return result;
         }
-
-        public static Gift ToModel(GiftViewModel viewModel)
-        {
-            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-
-            var result = new Gift
-            {
-                Id = viewModel.Id,
-                Title = viewModel.Title,
-                Description = viewModel.Description,
-                OrderOfImportance = viewModel.OrderOfImportance,
-                Url = viewModel.Url,
-            };
-
-            return result;
-        }
     }
 }
