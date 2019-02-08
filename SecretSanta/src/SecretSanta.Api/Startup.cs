@@ -32,6 +32,7 @@ namespace SecretSanta.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<IGiftService, GiftService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddDbContext<ApplicationDbContext>(builder =>
             {

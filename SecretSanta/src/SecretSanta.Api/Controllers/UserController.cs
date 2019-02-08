@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Api.ViewModels;
+using SecretSanta.Domain.Models;
 using SecretSanta.Domain.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,23 +18,26 @@ namespace SecretSanta.Api.Controllers
         private IUserService UserService { get; }
         private IMapper Mapper { get; set; }
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             UserService = userService;
+            Mapper = mapper;
         }
 
         // POST api/<controller>
         [HttpPost]
-        public ActionResult<UserViewModel> Post(UserInputViewModel userViewModel)
+        public ActionResult<UserViewModel> Post(UserInputViewModel userInputViewModel)
         {
-            if (userViewModel == null)
+            if (userInputViewModel == null)
             {
                 return BadRequest();
             }
 
-            var persistedUser = UserService.AddUser(UserInputViewModel.ToModel(userViewModel));
+            Mapper.Map<User>(userInputViewModel);
 
-            return Ok(UserViewModel.ToViewModel(persistedUser));
+            var persistedUser = UserService.AddUser(UserInputViewModel.ToModel(userInputViewModel));
+
+            return Ok(persistedUser);
         }
 
         // PUT api/<controller>/5
@@ -55,7 +59,7 @@ namespace SecretSanta.Api.Controllers
 
             var persistedUser = UserService.UpdateUser(foundUser);
 
-            return Ok(UserViewModel.ToViewModel(persistedUser));
+            return Ok(persistedUser);
         }
 
         // DELETE api/<controller>/5
@@ -64,7 +68,8 @@ namespace SecretSanta.Api.Controllers
         {
             bool userWasDeleted = UserService.DeleteUser(id);
 
-            return userWasDeleted ? (ActionResult)Ok() : (ActionResult)NotFound();
+            return userWasDeleted ?
+                (ActionResult)Ok() : (ActionResult)NotFound();
         }
     }
 }
