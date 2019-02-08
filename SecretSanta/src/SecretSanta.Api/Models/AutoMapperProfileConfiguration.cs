@@ -19,6 +19,8 @@ namespace SecretSanta.Api.Models
             CreateMap<GroupInputViewModel, GroupViewModel>();
             CreateMap<Group, GroupViewModel>();
             CreateMap<GroupInputViewModel, Group>();
+
+            CreateMap<Gift, GiftViewModel>();
         }
     }
 }

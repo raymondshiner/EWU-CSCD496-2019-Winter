@@ -17,12 +17,6 @@ namespace SecretSanta.Api.Tests.Controllers
     [TestClass]
     public class GroupControllerTests
     {
-        [AssemblyInitialize]
-        public static void ConfigureAutoMapper(TestContext context)
-        {
-            Mapper.Initialize(cfg => cfg.AddProfile(new AutoMapperProfileConfiguration()));
-        }
-
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void GroupController_RequiresGiftService()

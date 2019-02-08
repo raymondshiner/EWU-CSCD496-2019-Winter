@@ -16,7 +16,7 @@ namespace SecretSanta.Api.Controllers
     public class GroupController : ControllerBase
     {
         private IGroupService GroupService { get; }
-        public IMapper Mapper { get; set; }
+        private IMapper Mapper { get; set; }
 
         public GroupController(IGroupService groupService, IMapper mapper)
         {
