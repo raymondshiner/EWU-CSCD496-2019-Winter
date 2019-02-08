@@ -33,9 +33,7 @@ namespace SecretSanta.Api.Controllers
                 return BadRequest();
             }
 
-            Mapper.Map<User>(userInputViewModel);
-
-            var persistedUser = UserService.AddUser(UserInputViewModel.ToModel(userInputViewModel));
+            var persistedUser = UserService.AddUser(Mapper.Map<User>(userInputViewModel));
 
             return Ok(persistedUser);
         }
