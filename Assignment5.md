@@ -22,8 +22,8 @@ For this assignment start from the existing intellitect/Assignment5 branch.
 
 ### Going above and beyond
 - Ensure that there are not multiple loops in the pairings. That is, if you were to follow each pairing (going from the Santa to the Recipient) you should end up back at the person you started with. 
-For example: John, Jane, Jim, Jaun
-  
+  For example: John, Jane, Jim, Jaun
+
 Pairing with one loop:
 ```
 John => Jane
