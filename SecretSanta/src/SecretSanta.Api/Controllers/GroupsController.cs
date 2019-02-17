@@ -39,7 +39,7 @@ namespace SecretSanta.Api.Controllers
         [Produces(typeof(GroupViewModel))]
         public async Task<IActionResult> Get(int id)
         {
-            var group = GroupService.GetById(id);
+            var group = await GroupService.GetById(id);
             if (group == null)
             {
                 return NotFound();
