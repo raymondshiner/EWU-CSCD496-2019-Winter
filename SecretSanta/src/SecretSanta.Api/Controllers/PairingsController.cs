@@ -26,8 +26,10 @@ namespace SecretSanta.Api.Controllers
 
         // GET api/Pairing
         [HttpGet("groupId")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(200)]
         [Produces(typeof(ICollection<PairingViewModel>))]
-        public async Task<IActionResult> Get(int groupId)
+        public async Task<IActionResult> GeneratePairings(int groupId)
         {
             if (groupId <= 0)
             {

@@ -24,18 +24,13 @@ namespace SecretSanta.Domain.Services
                 .FirstOrDefaultAsync(x => x.Id == groupId);
 
             List<int> userIds = group?.GroupUsers?.Select(x => x.UserId).ToList();
-            if (userIds == null || userIds.Count == 2)
+            if (userIds == null || userIds.Count <= 2)
             {
                 return null;
             }
 
             Task<List<Pairing>> task = Task.Run(() => GetPairings(userIds));
             var myPairings = await task;
-
-            if (myPairings == null)
-            {
-                return null;
-            }
 
             await DbContext.AddRangeAsync(myPairings);
             await DbContext.SaveChangesAsync();
