@@ -20,6 +20,10 @@ For this assignment start from the existing intellitect/Assignment7 branch.
      - Remove a user
 - Create a page for managing a users gifts
    - This will be done using VueJs and will be using typescript for sending data to and from the API
+     - Show all gifts
+     - Add a gift
+     - Edit a gift
+     - Remove a gift
 - The web application should use the generated classes that are created from nswagstudio (or other tool)
 - If I enter invalid data (empty first name for a user) it should not save off the data and should tell me about the error
 - No unit tests are expected for this since most of the logic is actually already tested in the API
