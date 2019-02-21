@@ -29,7 +29,6 @@ For this assignment start from the existing intellitect/Assignment7 branch.
 
 ### Useful Stuff
 
-- Chapters 19/20 from the book
 - [NSwagStudio](https://github.com/RSuter/NSwag/wiki/NSwagStudio)
 - [NodeJS](https://nodejs.org/en/)
 - [Bulma Documentation](https://bulma.io/documentation/)
