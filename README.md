@@ -15,9 +15,9 @@ For this assignment start from the existing intellitect/Assignment7 branch.
      - Remove a user
   - Groups
      - Display all grpups
-     - Add a user
-     - Edit a user
-     - Remove a user
+     - Add a group
+     - Edit a grpup
+     - Remove a group
 - Create a page for managing a users gifts
    - This will be done using VueJs and will be using typescript for sending data to and from the API
      - Show all gifts
