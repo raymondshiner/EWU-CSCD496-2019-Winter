@@ -37,4 +37,4 @@ For this assignment start from the existing intellitect/Assignment7 branch.
 - [NodeJS](https://nodejs.org/en/)
 - [Bulma Documentation](https://bulma.io/documentation/)
 - [vue.js](https://vuejs.org/)
-
+- [vue/typescript/webpack starter](https://github.com/Microsoft/TypeScript-Vue-Starter)
