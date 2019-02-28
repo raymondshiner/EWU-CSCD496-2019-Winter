@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Web.ApiModels;
 
@@ -46,6 +48,58 @@ namespace SecretSanta.Web.Controllers
                         result = RedirectToAction(nameof(Index));
                     }
                     catch(SwaggerException se)
+                    {
+                        ViewBag.ErrorMessage = se.Message;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            UserViewModel fetchedUser = null;
+
+            using (var httpClient = ClientFactory.CreateClient("SecretSantaApi"))
+            {
+                try
+                {
+                    var secretSantaClient = new SecretSantaClient(httpClient.BaseAddress.ToString(), httpClient);
+                    fetchedUser = await secretSantaClient.GetUserAsync(id);
+                }
+                catch (SwaggerException swaggerException)
+                {
+                    ModelState.AddModelError("", swaggerException.Message);
+                }
+            }
+
+            return View(fetchedUser);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewModel viewModel)
+        {
+            IActionResult result = View();
+
+            if (ModelState.IsValid)
+            {
+                using (var httpClient = ClientFactory.CreateClient("SecretSantaApi"))
+                {
+                    try
+                    {
+                        var secretSantaClient = new SecretSantaClient(httpClient.BaseAddress.ToString(), httpClient);
+                        await secretSantaClient.UpdateUserAsync(viewModel.Id, new UserInputViewModel
+                        {
+                            FirstName = viewModel.FirstName,
+                            LastName = viewModel.LastName
+                        });
+
+                        result = RedirectToAction(nameof(Index));
+                    }
+                    catch (SwaggerException se)
                     {
                         ViewBag.ErrorMessage = se.Message;
                     }

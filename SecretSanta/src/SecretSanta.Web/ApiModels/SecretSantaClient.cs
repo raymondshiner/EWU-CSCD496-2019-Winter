@@ -4,6 +4,9 @@
 // </auto-generated>
 //----------------------
 
+using System;
+using System.Threading.Tasks;
+
 namespace SecretSanta.Web.ApiModels
 {
 #pragma warning disable
