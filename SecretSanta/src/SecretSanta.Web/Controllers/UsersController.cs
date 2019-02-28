@@ -107,5 +107,28 @@ namespace SecretSanta.Web.Controllers
 
             return result;
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            IActionResult result = null;
+            using (var httpClient = ClientFactory.CreateClient("SecretSantaApi"))
+            {
+                try
+                {
+                    var blogEngineClient = new SecretSantaClient(httpClient.BaseAddress.ToString(), httpClient);
+                    await blogEngineClient.DeleteUserAsync(id);
+
+                    result = RedirectToAction(nameof(Index));
+                }
+                catch (SwaggerException se)
+                {
+                    ModelState.AddModelError("", se.Message);
+                }
+            }
+
+            return result;
+        }
+
+
     }
 }
