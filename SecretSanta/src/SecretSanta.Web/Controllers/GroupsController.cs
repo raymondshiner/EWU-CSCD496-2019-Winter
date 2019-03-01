@@ -117,8 +117,8 @@ namespace SecretSanta.Web.Controllers
             {
                 try
                 {
-                    var blogEngineClient = new SecretSantaClient(httpClient.BaseAddress.ToString(), httpClient);
-                    await blogEngineClient.DeleteGroupAsync(id);
+                    var secretSantaClient = new SecretSantaClient(httpClient.BaseAddress.ToString(), httpClient);
+                    await secretSantaClient.DeleteGroupAsync(id);
 
                     result = RedirectToAction(nameof(Index));
                 }
