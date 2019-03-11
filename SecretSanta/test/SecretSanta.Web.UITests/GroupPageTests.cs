@@ -80,6 +80,7 @@ namespace SecretSanta.Web.UITests
             //Act
             IWebElement deleteLink = page.GetDeleteLink(groupName);
             deleteLink.Click();
+            Driver.SwitchTo().Alert().Accept();
 
             //Assert
             List<string> groupNames = page.GroupNames;
@@ -101,7 +102,7 @@ namespace SecretSanta.Web.UITests
 
     public class HomePage
     {
-        public const string Path = "https://localhost:44325/";
+        public const string Path = "https://localhost:44349/";
         public const string Slug = "";
         public IWebDriver Driver { get; }
         public HomePage(IWebDriver driver)
@@ -153,7 +154,7 @@ namespace SecretSanta.Web.UITests
             ReadOnlyCollection<IWebElement> deleteLinks = 
                 Driver.FindElements(By.CssSelector("a.is-danger"));
 
-            return deleteLinks.Single(x => x.GetAttribute("onclick").EndsWith($"{groupName}')"));
+            return deleteLinks.Single(x => x.GetAttribute("onclick").EndsWith($"{groupName}?')"));
         }
     }
 
