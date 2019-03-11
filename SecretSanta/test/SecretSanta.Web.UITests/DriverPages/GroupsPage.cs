@@ -16,7 +16,7 @@ namespace SecretSanta.Web.UITests.DriverPages
             Driver = driver ?? throw new ArgumentNullException(nameof(driver));
         }
 
-        public IWebElement AddGroup => Driver.FindElement(By.LinkText("Add Group"));
+        public IWebElement AddGroupLink => Driver.FindElement(By.LinkText("Add Group"));
 
         public AddGroupsPage AddGroupsPage => new AddGroupsPage(Driver);
 

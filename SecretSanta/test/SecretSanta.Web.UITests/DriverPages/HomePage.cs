@@ -16,5 +16,7 @@ namespace SecretSanta.Web.UITests.DriverPages
         public GroupsPage GroupPage => new GroupsPage(Driver);
 
         public IWebElement GroupsLink => Driver.FindElement(By.LinkText("Groups"));
+
+        public IWebElement UsersLink => Driver.FindElement(By.LinkText("Users"));
     }
 }

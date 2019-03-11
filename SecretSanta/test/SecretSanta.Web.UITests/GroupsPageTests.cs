@@ -12,7 +12,7 @@ using SecretSanta.Web.UITests.DriverPages;
 namespace SecretSanta.Web.UITests
 {
     [TestClass]
-    public class GroupPageTests
+    public class GroupsPageTests
     {
         private IWebDriver Driver { get; set; }
 
@@ -30,7 +30,7 @@ namespace SecretSanta.Web.UITests
         }
 
         [TestMethod]
-        public void CanGetToGroupsPage()
+        public void CanNavigateToGroupsPage()
         {
             //Arrange
             Driver.Navigate().GoToUrl(HomePage.Path);
@@ -52,7 +52,7 @@ namespace SecretSanta.Web.UITests
             var page = new GroupsPage(Driver);
 
             //Act
-            page.AddGroup.Click();
+            page.AddGroupLink.Click();
 
             //Assert
             Assert.IsTrue(Driver.Url.EndsWith(AddGroupsPage.Slug));
