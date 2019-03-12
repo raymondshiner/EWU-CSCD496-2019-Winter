@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -12,8 +13,6 @@ namespace SecretSanta.Web.UITests
     [TestClass]
     public class GroupPageTests
     {
-        private const string RootUrl = "https://localhost:44325/";
-
         private IWebDriver Driver { get; set; }
 
         [TestInitialize]
@@ -25,15 +24,15 @@ namespace SecretSanta.Web.UITests
         [TestCleanup]
         public void Cleanup()
         {
-            //Driver.Quit();
-            //Driver.Dispose();
+            Driver.Quit();
+            Driver.Dispose();
         }
 
         [TestMethod]
         public void CanGetToGroupsPage()
         {
             //Arrange
-            Driver.Navigate().GoToUrl(RootUrl);
+            Driver.Navigate().GoToUrl(HomePage.Path);
 
             //Act
             var homePage = new HomePage(Driver);
@@ -47,8 +46,8 @@ namespace SecretSanta.Web.UITests
         public void CanNavigateToAddGroupsPage()
         {
             //Arrange
-            var rootUri = new Uri(RootUrl);
-            Driver.Navigate().GoToUrl(new Uri(rootUri, GroupsPage.Slug));
+            var rootUri = new Uri(HomePage.Path);
+            Driver.Navigate().GoToUrl(GroupsPage.Path);
             var page = new GroupsPage(Driver);
 
             //Act
@@ -89,40 +88,41 @@ namespace SecretSanta.Web.UITests
 
         private GroupsPage CreateGroup(string groupName)
         {
-            var rootUri = new Uri(RootUrl);
-            Driver.Navigate().GoToUrl(new Uri(rootUri, GroupsPage.Slug));
-            var page = new GroupsPage(Driver);
-            page.AddGroup.Click();
-
+            Driver.Navigate().GoToUrl(AddGroupsPage.Path);
+            var groupsPage = new GroupsPage(Driver);
             var addGroupPage = new AddGroupsPage(Driver);
             
             addGroupPage.GroupNameTextBox.SendKeys(groupName);
             addGroupPage.SubmitButton.Click();
-            return page;
+
+            return groupsPage;
         }
     }
 
     public class HomePage
     {
+        public const string Path = "https://localhost:44325/";
+        public const string Slug = "";
         public IWebDriver Driver { get; }
-
-        public GroupsPage GroupPage => new GroupsPage(Driver);
-
-        //Id, LinkText, CssSelector/XPath
-        //public IWebElement GroupsLink => Driver.FindElement(By.CssSelector("a[href=\"/Groups\"]"));
-        public IWebElement GroupsLink => Driver.FindElement(By.LinkText("Groups"));
-
         public HomePage(IWebDriver driver)
         {
             Driver = driver ?? throw new ArgumentNullException(nameof(driver));
         }
+
+        public GroupsPage GroupPage => new GroupsPage(Driver);
+
+        public IWebElement GroupsLink => Driver.FindElement(By.LinkText("Groups"));
     }
 
     public class GroupsPage
     {
+        public const string Path = HomePage.Path + "Groups/";
         public const string Slug = "Groups";
-
         public IWebDriver Driver { get; }
+        public GroupsPage(IWebDriver driver)
+        {
+            Driver = driver ?? throw new ArgumentNullException(nameof(driver));
+        }
 
         public IWebElement AddGroup => Driver.FindElement(By.LinkText("Add Group"));
         
@@ -155,19 +155,17 @@ namespace SecretSanta.Web.UITests
 
             return deleteLinks.Single(x => x.GetAttribute("onclick").EndsWith($"{groupName}')"));
         }
-
-        public GroupsPage(IWebDriver driver)
-        {
-            Driver = driver ?? throw new ArgumentNullException(nameof(driver));
-        }
     }
 
     public class AddGroupsPage
     {
-
+        public const string Path = GroupsPage.Path + "Add/";
         public const string Slug = GroupsPage.Slug + "/Add";
-
         public IWebDriver Driver { get; }
+        public AddGroupsPage(IWebDriver driver)
+        {
+            Driver = driver ?? throw new ArgumentNullException(nameof(driver));
+        }
 
         public IWebElement GroupNameTextBox => Driver.FindElement(By.Id("Name"));
 
@@ -175,10 +173,5 @@ namespace SecretSanta.Web.UITests
             Driver
                 .FindElements(By.CssSelector("button.is-primary"))
                 .Single(x => x.Text == "Submit");
-
-        public AddGroupsPage(IWebDriver driver)
-        {
-            Driver = driver ?? throw new ArgumentNullException(nameof(driver));
-        }
     }
 }
