@@ -64,6 +64,52 @@ namespace SecretSanta.Web.UITests
             Assert.IsTrue(Driver.Url.EndsWith(EditUsersPage.Slug + "/" + editPage.GetUserId));
         }
 
+        [DataRow("Secret Santa")]
+        [DataRow("Groups")]
+        [TestMethod]
+        public void CanNavigateFromUsersPageToNavBarPages(string linkName)
+        {
+            Driver.Navigate().GoToUrl(UsersPage.Path);
+            var page = new UsersPage(Driver);
+            var navbarLink = page.GetNavbarLink(linkName);
+            navbarLink.Click();
+
+            if (linkName == "Secret Santa")
+            {
+                Assert.IsTrue(Driver.Url == HomePage.Path);
+            }
+
+            else
+            {
+                Assert.IsTrue(Driver.Url.EndsWith(linkName));
+            }
+        }
+
+
+        [DataRow("Secret Santa")]
+        [DataRow("Groups")]
+        [DataRow("Users")]
+        [TestMethod]
+        public void CanNavigateFromAddUsersPageToNavBarPages(string linkName)
+        {
+            Driver.Navigate().GoToUrl(AddUsersPage.Path);
+            var page = new AddUsersPage(Driver);
+            var navbarLink = page.GetNavbarLink(linkName);
+            navbarLink.Click();
+
+            if (linkName == "Secret Santa")
+            {
+                Assert.IsTrue(Driver.Url == HomePage.Path);
+            }
+
+            else
+            {
+                Assert.IsTrue(Driver.Url.EndsWith(linkName));
+            }
+        }
+
+
+
         [TestMethod]
         public void CanAddUser()
         {

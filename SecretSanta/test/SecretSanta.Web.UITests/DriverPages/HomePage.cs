@@ -5,7 +5,7 @@ namespace SecretSanta.Web.UITests.DriverPages
 {
     public class HomePage
     {
-        public const string Path = "https://localhost:44349/";
+        public const string Path = "https://localhost:44325/";
         public const string Slug = "";
         public IWebDriver Driver { get; }
         public HomePage(IWebDriver driver)

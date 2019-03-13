@@ -55,5 +55,8 @@ namespace SecretSanta.Web.UITests.DriverPages
 
             return editLinks.Single(x => x.Text.StartsWith(userName)).FindElement(By.CssSelector("a.button"));
         }
+
+        public IWebElement GetNavbarLink(string linkName) => Driver.FindElement(By.LinkText(linkName));
     }
+
 }
