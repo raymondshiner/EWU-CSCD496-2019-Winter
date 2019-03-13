@@ -47,5 +47,13 @@ namespace SecretSanta.Web.UITests.DriverPages
 
             return deleteLinks.Single(x => x.GetAttribute("onclick").EndsWith($"{userName}?')"));
         }
+
+        public IWebElement GetEditLink(string userName)
+        {
+            ReadOnlyCollection<IWebElement> editLinks =
+                Driver.FindElements(By.CssSelector("h1+ul>li"));
+
+            return editLinks.Single(x => x.Text.StartsWith(userName)).FindElement(By.CssSelector("a.button"));
+        }
     }
 }

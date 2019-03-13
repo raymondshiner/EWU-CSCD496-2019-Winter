@@ -48,6 +48,23 @@ namespace SecretSanta.Web.UITests
         }
 
         [TestMethod]
+        public void CanNavigateToEditUsersPage()
+        {
+            var firstName = "First Name";
+            var lastName = "Last Name" + Guid.NewGuid().ToString("N");
+            var fullName = firstName + " " + lastName;
+
+            var usersPage = CreateUser(firstName, lastName);
+            var editLink = usersPage.GetEditLink(fullName);
+            
+            editLink.Click();
+
+            var editPage = new EditUsersPage(Driver);
+
+            Assert.IsTrue(Driver.Url.EndsWith(EditUsersPage.Slug + "/" + editPage.GetUserId));
+        }
+
+        [TestMethod]
         public void CanAddUser()
         {
             var firstName = "First Name";
@@ -59,6 +76,34 @@ namespace SecretSanta.Web.UITests
             Assert.IsTrue(Driver.Url.EndsWith(UsersPage.Slug));
             var userNameList = usersPage.UserNames;
             Assert.IsTrue(userNameList.Contains(fullName));
+        }
+
+        [TestMethod]
+        public void CanEditUser()
+        {
+            var firstName = "First Name";
+            var lastName = "Last Name" + Guid.NewGuid().ToString("N");
+            var fullName = firstName + " " + lastName;
+
+            var usersPage = CreateUser(firstName, lastName);
+            var editUsersPage = new EditUsersPage(Driver);
+
+            var editLink = usersPage.GetEditLink(fullName);
+            editLink.Click();
+            
+            var newFirstName = "New Name";
+            var newFullName = newFirstName + " " + lastName;
+
+            editUsersPage.FirstNameTextBox.Clear();
+            editUsersPage.FirstNameTextBox.SendKeys(newFirstName);
+            editUsersPage.LastNameTextBox.Clear();
+            editUsersPage.LastNameTextBox.SendKeys(lastName);
+
+            editUsersPage.SubmitButton.Click();
+            
+            Assert.IsTrue(Driver.Url.EndsWith(UsersPage.Slug));
+            Assert.IsTrue(usersPage.UserNames.Contains(newFullName));
+            Assert.IsFalse(usersPage.UserNames.Contains(fullName));
         }
 
         [TestMethod]
