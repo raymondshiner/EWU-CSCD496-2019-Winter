@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using OpenQA.Selenium;
 
@@ -37,6 +38,14 @@ namespace SecretSanta.Web.UITests.DriverPages
                     return text;
                 }).ToList();
             }
+        }
+
+        public IWebElement GetDeleteLink(string userName)
+        {
+            ReadOnlyCollection<IWebElement> deleteLinks =
+                Driver.FindElements(By.CssSelector("a.is-danger"));
+
+            return deleteLinks.Single(x => x.GetAttribute("onclick").EndsWith($"{userName}?')"));
         }
     }
 }

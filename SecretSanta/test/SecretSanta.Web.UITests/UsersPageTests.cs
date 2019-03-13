@@ -54,12 +54,31 @@ namespace SecretSanta.Web.UITests
             var lastName = "Last Name" + Guid.NewGuid().ToString("N");
             var fullName = firstName + " " + lastName;
 
-            Driver.Navigate().GoToUrl(AddUsersPage.Path);
             var usersPage = CreateUser(firstName, lastName);
 
             Assert.IsTrue(Driver.Url.EndsWith(UsersPage.Slug));
             var userNameList = usersPage.UserNames;
             Assert.IsTrue(userNameList.Contains(fullName));
+        }
+
+        [TestMethod]
+        public void CanDeleteUser()
+        {
+            var firstName = "First Name";
+            var lastName = "Last Name" + Guid.NewGuid().ToString("N");
+            var fullName = firstName + " " + lastName;
+
+            var usersPage = CreateUser(firstName, lastName);
+
+            Driver.Navigate().GoToUrl(UsersPage.Path);
+            usersPage.GetDeleteLink(fullName).Click();
+            Driver.SwitchTo().Alert().Accept();
+
+            var userNames = usersPage.UserNames;
+
+            Assert.IsTrue(Driver.Url.EndsWith(UsersPage.Slug));
+            Assert.IsFalse(userNames.Contains(fullName));
+
         }
 
         private UsersPage CreateUser(string firstName, string lastName)
