@@ -21,6 +21,6 @@ namespace SecretSanta.Web.UITests.DriverPages
                 .FindElements(By.CssSelector("button.is-primary"))
                 .Single(x => x.Text == "Submit");
 
-        public string GetUserId => Driver.Url.Substring(Driver.Url.LastIndexOf("/") + 1);
+        public IWebElement GetNavbarLink(string linkName) => Driver.FindElement(By.LinkText(linkName));
     }
 }

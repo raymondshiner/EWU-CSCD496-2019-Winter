@@ -108,6 +108,28 @@ namespace SecretSanta.Web.UITests
             }
         }
 
+        [DataRow("Secret Santa")]
+        [DataRow("Groups")]
+        [DataRow("Users")]
+        [TestMethod]
+        public void CanNavigateFromEditUsersPageToNavBarPages(string linkName)
+        {
+            Driver.Navigate().GoToUrl(EditUsersPage.Path);
+            var page = new EditUsersPage(Driver);
+            var navbarLink = page.GetNavbarLink(linkName);
+            navbarLink.Click();
+
+            if (linkName == "Secret Santa")
+            {
+                Assert.IsTrue(Driver.Url == HomePage.Path);
+            }
+
+            else
+            {
+                Assert.IsTrue(Driver.Url.EndsWith(linkName));
+            }
+        }
+
 
 
         [TestMethod]
@@ -137,7 +159,6 @@ namespace SecretSanta.Web.UITests
 
             Assert.IsTrue(notification.Text == "The FirstName field is required.");
         }
-
 
         [TestMethod]
         public void CanEditUser()
