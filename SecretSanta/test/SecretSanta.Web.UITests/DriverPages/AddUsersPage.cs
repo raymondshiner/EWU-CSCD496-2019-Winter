@@ -25,5 +25,6 @@ namespace SecretSanta.Web.UITests.DriverPages
 
         public IWebElement GetNavbarLink(string linkName) => Driver.FindElement(By.LinkText(linkName));
 
+        public IWebElement GetFirstNameRequiredNotification => Driver.FindElement(By.CssSelector("ul>li"));
     }
 }

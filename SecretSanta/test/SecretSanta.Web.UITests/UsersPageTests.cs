@@ -125,6 +125,21 @@ namespace SecretSanta.Web.UITests
         }
 
         [TestMethod]
+        public void FirstNameValidationRequired()
+        {
+            Driver.Navigate().GoToUrl(AddUsersPage.Path);
+            var page = new AddUsersPage(Driver);
+
+            page.LastNameTextBox.SendKeys("lastName");
+            page.SubmitButton.Click();
+
+            var notification = page.GetFirstNameRequiredNotification;
+
+            Assert.IsTrue(notification.Text == "The FirstName field is required.");
+        }
+
+
+        [TestMethod]
         public void CanEditUser()
         {
             var firstName = "First Name";
